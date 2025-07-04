@@ -7,8 +7,6 @@ git config --global user.name "mqjd"
 git config --global user.email "1378415278@qq.com"
 
 githubUrl=https://mqjd:${GITHUB_TOKEN}@github.com/mqjd/learn_english.git
-giteeUrl=https://MQJD:${GITEE_TOKEN}@gitee.com/MQJD/mqjd.git
-# codingUrl=htps://JshEHrjrhN:${CODING_TOKEN}@mqjd.coding.net/mqjd/m/blog.git
 
 npm install --legacy-peer-deps
 
@@ -23,6 +21,8 @@ npm run build
 cd public
 echo "mqjd.xyz" > CNAME
 git init
+git checkout --orphan pages
 git add -A
 git commit -m "来自github actions的自动部署"
-git push -f $githubUrl pages
+git remote add origin "$githubUrl"
+git push -f origin pages
