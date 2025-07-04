@@ -29,7 +29,7 @@ export type MBHomepageProps = {
 }
 
 const Homepage = ({ posts }: MBHomepageProps) => {
-  const { basePath,relativePath, blogPath } = useMinimalBlogConfig()
+  const { basePath, relativePath, blogPath } = useMinimalBlogConfig()
   const { siteTitle } = useSiteMetadata()
 
   return (

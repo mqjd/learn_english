@@ -126,6 +126,7 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
 
     type MinimalBlogConfig implements Node {
       basePath: String
+      relativePath: String
       blogPath: String
       postsPath: String
       pagesPath: String
@@ -153,6 +154,7 @@ export const sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
   const { createNode } = actions
   const {
     basePath,
+    relativePath,
     blogPath,
     postsPath,
     pagesPath,
@@ -166,6 +168,7 @@ export const sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
 
   const minimalBlogConfig = {
     basePath,
+    relativePath,
     blogPath,
     postsPath,
     pagesPath,
@@ -194,7 +197,7 @@ export const sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
 export const onCreateNode = ({ node, actions, getNode, createNodeId, createContentDigest }, themeOptions) => {
   const { createNode, createParentChildLink } = actions
 
-  const { postsPath, pagesPath, basePath } = defaultOptions
+  const { relativePath, postsPath, pagesPath, basePath } = defaultOptions
   // Make sure that it's an MDX node
   if (node.internal.type !== `Mdx`) {
     return
@@ -300,7 +303,7 @@ const tagsTemplate = require.resolve(`./src/templates/tags-query.tsx`)
 export const createPages = async ({ actions, graphql, reporter }, themeOptions) => {
   const { createPage } = actions
 
-  const { basePath, blogPath, tagsPath, formatString } = defaultOptions
+  const { relativePath, basePath, blogPath, tagsPath, formatString } = defaultOptions
 
   createPage({
     path: basePath,

@@ -1,5 +1,6 @@
 const options = {
   basePath: `/`,
+  relativePath: `/learn_english`,
   blogPath: `/blog`,
   postsPath: `./docs/posts`,
   postsPrefix: `/`,

@@ -13,7 +13,7 @@ type NavigationProps = {
 };
 
 const Navigation = ({ nav }: NavigationProps) => {
-  const { basePath } = useMinimalBlogConfig();
+  const { basePath, relativePath } = useMinimalBlogConfig();
 
   return (
     <React.Fragment>
@@ -30,7 +30,7 @@ const Navigation = ({ nav }: NavigationProps) => {
               activeClassName="active"
               key={item.slug}
               sx={(t: any) => ({ ...t.styles?.a })}
-              to={replaceSlashes(`/${basePath}/${item.slug}`)}
+              to={replaceSlashes(`/${relativePath}/${basePath}/${item.slug}`)}
             >
               {item.title}
             </Link>

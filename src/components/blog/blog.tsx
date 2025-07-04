@@ -23,7 +23,7 @@ export type MBBlogProps = {
 }
 
 const Blog = ({ posts }: MBBlogProps) => {
-  const { tagsPath, basePath } = useMinimalBlogConfig()
+  const { tagsPath, basePath, relativePath } = useMinimalBlogConfig()
 
   return (
     <Layout>
@@ -33,7 +33,7 @@ const Blog = ({ posts }: MBBlogProps) => {
         </Heading>
         <Link
           sx={(t) => ({ ...t.styles?.a, variant: `links.secondary`, marginY: 2 })}
-          to={replaceSlashes(`/${basePath}/${tagsPath}`)}
+          to={replaceSlashes(`${relativePath}/${basePath}/${tagsPath}`)}
         >
           View all tags
         </Link>

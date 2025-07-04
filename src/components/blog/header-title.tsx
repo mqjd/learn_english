@@ -7,11 +7,11 @@ import useMinimalBlogConfig from "../../hooks/use-minimal-blog-config";
 
 const HeaderTitle = () => {
   const { siteTitle } = useSiteMetadata();
-  const { basePath } = useMinimalBlogConfig();
+  const { basePath, relativePath } = useMinimalBlogConfig();
 
   return (
     <Link
-      to={replaceSlashes(`/${basePath}`)}
+      to={replaceSlashes(`/${relativePath}/${basePath}`)}
       aria-label={`${siteTitle} - Back to home`}
       sx={{ color: `heading`, textDecoration: `none` }}
     >

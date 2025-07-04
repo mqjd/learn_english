@@ -3,6 +3,7 @@ import * as React from "react";
 import { jsx, Box } from "theme-ui";
 import { Link } from "gatsby";
 import ItemTags from "./item-tags";
+import useMinimalBlogConfig from "../../hooks/use-minimal-blog-config";
 
 type BlogListItemProps = {
   post: {
@@ -20,10 +21,12 @@ type BlogListItemProps = {
   showTags?: boolean;
 };
 
-const BlogListItem = ({ post, showTags = true }: BlogListItemProps) => (
+const BlogListItem = ({ post, showTags = true }: BlogListItemProps) => {
+  const { relativePath } = useMinimalBlogConfig()
+  return (
   <Box mb={4}>
     <Link
-      to={post.slug}
+      to={relativePath + '/' + post.slug}
       sx={(t: any) => ({
         ...t.styles?.a,
         fontSize: ["1.25em", "1.5em"],
@@ -49,6 +52,6 @@ const BlogListItem = ({ post, showTags = true }: BlogListItemProps) => (
       )}
     </p>
   </Box>
-);
+)};
 
 export default BlogListItem;
