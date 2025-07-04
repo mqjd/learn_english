@@ -1,22 +1,22 @@
 const options = {
-  basePath: `/`,
-  blogPath: `/blog`,
+  basePath: `learn_english`,
+  blogPath: `blog`,
   postsPath: `./docs/posts`,
   postsPrefix: `/`,
   pagesPath: `./docs/pages`,
-  tagsPath: `/tags`,
+  tagsPath: `tags`,
   navigation: [
     {
       title: `Blog`,
-      slug: `/blog`,
+      slug: `blog`,
     },
     {
       title: `BookMark`,
-      slug: `/bookmark`,
+      slug: `bookmark`,
     },
     {
       title: `About`,
-      slug: `/about`,
+      slug: `about`,
     },
   ],
   externalLinks: [
