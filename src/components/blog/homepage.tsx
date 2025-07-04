@@ -29,7 +29,7 @@ export type MBHomepageProps = {
 }
 
 const Homepage = ({ posts }: MBHomepageProps) => {
-  const { basePath, blogPath } = useMinimalBlogConfig()
+  const { basePath,relativePath, blogPath } = useMinimalBlogConfig()
   const { siteTitle } = useSiteMetadata()
 
   return (
@@ -39,7 +39,7 @@ const Homepage = ({ posts }: MBHomepageProps) => {
         <Hero />
       </section>
       <Title text="Latest Posts">
-        <Link to={replaceSlashes(`/${basePath}/${blogPath}`)}>Read all posts</Link>
+        <Link to={replaceSlashes(`/${relativePath}/${basePath}/${blogPath}`)}>Read all posts</Link>
       </Title>
       <Listing posts={posts} showTags={false} />
       <List>
