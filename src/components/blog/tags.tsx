@@ -16,7 +16,7 @@ export type MBTagsProps = {
 }
 
 const Tags = ({ list }: MBTagsProps) => {
-  const { tagsPath, basePath } = useMinimalBlogConfig()
+  const { relativePath, tagsPath, basePath } = useMinimalBlogConfig()
 
   return (
     <Layout>
@@ -28,7 +28,7 @@ const Tags = ({ list }: MBTagsProps) => {
           <Flex key={listItem.fieldValue} mb={[1, 1, 2]} sx={{ alignItems: `center` }}>
             <Link
               sx={(t) => ({ ...t.styles?.a, variant: `links.listItem`, mr: 2 })}
-              to={replaceSlashes(`/${basePath}/${tagsPath}/${kebabCase(listItem.fieldValue)}`)}
+              to={replaceSlashes(`${relativePath}/${basePath}/${tagsPath}/${kebabCase(listItem.fieldValue)}`)}
             >
               {listItem.fieldValue} <span sx={{ color: `secondary` }}>({listItem.totalCount})</span>
             </Link>

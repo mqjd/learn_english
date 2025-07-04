@@ -361,11 +361,11 @@ export const createPages = async ({ actions, graphql, reporter }, themeOptions) 
   posts.forEach((post) => {
     const matchPath = [post.slug, '*'].join('/')
     createPage({
-      path: post.slug,
+      path: `${relativePath}/${post.slug}`,
       matchPath,
       component: `${postTemplate}?__contentFilePath=${post.contentFilePath}`,
       context: {
-        slug: post.slug,
+        slug: `${relativePath}/${post.slug}`,
         formatString,
       },
       defer: post.defer,
