@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-remark-graph",
+  "version": "0.0.5",
+  "description": "graph viewer",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mqjd/gatsby-remark-graph.git"
+  },
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "remark"
+  ],
+  "author": "Qiang Ma <mq1378415278@gmail.com> (https://github.com/mqjd)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mqjd/gatsby-remark-graph/issues"
+  },
+  "homepage": "https://github.com/mqjd/gatsby-remark-graph#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}

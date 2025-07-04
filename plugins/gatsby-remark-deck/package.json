@@ -1,0 +1,25 @@
+{
+  "name": "gatsby-remark-drawio-viewer",
+  "version": "0.0.5",
+  "description": "drawio viewer for gatsby",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mqjd/gatsby-remark-drawio.git"
+  },
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "remark"
+  ],
+  "author": "Qiang Ma <mq1378415278@gmail.com> (https://github.com/mqjd)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mqjd/gatsby-remark-drawio/issues"
+  },
+  "homepage": "https://github.com/mqjd/gatsby-remark-drawio#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}

@@ -1,0 +1,31 @@
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #757575;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #bdbdbd;
+}
+.cs-col-layout > div div[data-themeui-nested-provider="true"] {
+  height: 100%;
+  width: 100%;
+}
+
+.cs-layout div[data-themeui-nested-provider="true"] {
+  height: 100%;
+  width: 100%;
+}
+.geDiagramContainer {
+  min-width: 100%;
+}
+
+.full-screen-button:hover svg {
+  display: inline;
+}
+
+.full-screen-button svg {
+  display: none;
+}
