@@ -23,7 +23,6 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
   const { createTypes, createFieldExtension } = actions
 
   const { basePath, postsPrefix } = defaultOptions
-
   createFieldExtension({
     name: `slugify`,
     extend() {
@@ -127,7 +126,6 @@ export const createSchemaCustomization = ({ actions }, themeOptions) => {
 
     type MinimalBlogConfig implements Node {
       basePath: String
-      relativePath: String
       blogPath: String
       postsPath: String
       pagesPath: String
@@ -155,7 +153,6 @@ export const sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
   const { createNode } = actions
   const {
     basePath,
-    relativePath,
     blogPath,
     postsPath,
     pagesPath,
@@ -169,7 +166,6 @@ export const sourceNodes = ({ actions, createContentDigest }, themeOptions) => {
 
   const minimalBlogConfig = {
     basePath,
-    relativePath,
     blogPath,
     postsPath,
     pagesPath,
@@ -361,11 +357,11 @@ export const createPages = async ({ actions, graphql, reporter }, themeOptions) 
   posts.forEach((post) => {
     const matchPath = [post.slug, '*'].join('/')
     createPage({
-      path: `${relativePath}/${post.slug}`,
+      path: post.slug,
       matchPath,
       component: `${postTemplate}?__contentFilePath=${post.contentFilePath}`,
       context: {
-        slug: `${relativePath}/${post.slug}`,
+        slug: post.slug,
         formatString,
       },
       defer: post.defer,
