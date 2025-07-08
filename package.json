@@ -64,12 +64,7 @@
     "@types/node": "^22.10.1",
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
-    "bluebird": "^3.7.2",
-    "cheerio": "^1.0.0",
     "cross-env": "^7.0.3",
-    "hasbin": "^1.2.3",
-    "micromark-extension-mdxjs": "^3.0.0",
-    "request": "^2.88.2",
     "typescript": "^5.8.3"
   }
 }
