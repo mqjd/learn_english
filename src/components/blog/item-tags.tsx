@@ -13,7 +13,7 @@ type TagsProps = {
 };
 
 const ItemTags = ({ tags }: TagsProps) => {
-  const { tagsPath, relativePath, basePath } = useMinimalBlogConfig();
+  const { tagsPath, basePath } = useMinimalBlogConfig();
 
   return (
     <React.Fragment>
@@ -22,7 +22,7 @@ const ItemTags = ({ tags }: TagsProps) => {
           {!!i && `, `}
           <Link
             sx={(t: any) => ({ ...t.styles?.a })}
-            to={replaceSlashes(`/${relativePath}/${basePath}/${tagsPath}/${tag.slug}`)}
+            to={replaceSlashes(`/${basePath}/${tagsPath}/${tag.slug}`)}
           >
             {tag.name}
           </Link>

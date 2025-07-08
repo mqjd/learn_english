@@ -3,7 +3,6 @@ import { graphql, useStaticQuery } from "gatsby"
 type UseMinimalBlogConfigProps = {
   minimalBlogConfig: {
     basePath: string
-    relativePath: string
     blogPath: string
     postsPath: string
     pagesPath: string
@@ -26,7 +25,6 @@ const useMinimalBlogConfig = () => {
     query {
       minimalBlogConfig {
         basePath
-        relativePath
         blogPath
         postsPath
         pagesPath

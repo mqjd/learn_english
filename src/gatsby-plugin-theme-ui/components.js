@@ -3,9 +3,6 @@ import { preToCodeBlock } from "@lekoarts/themes-utils";
 import * as React from "react";
 import { Text } from "theme-ui";
 import Code from "../components/blog/code";
-import * as mdxComponents from "../components/deck/components";
-import DrawioViewer from "../components/drawio-viewer";
-import Carousel from "../components/carousel";
 import Title from "../components/blog/title";
 
 const components = {
@@ -14,11 +11,6 @@ const components = {
     <Title text={text} {...props}>
       {children}
     </Title>
-  ),
-  Carousel,
-  ...mdxComponents,
-  DrawioViewer: ({ children, ...props }) => (
-    <DrawioViewer {...props}></DrawioViewer>
   ),
   pre: (preProps) => {
     const props = preToCodeBlock(preProps);
