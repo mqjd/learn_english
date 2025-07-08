@@ -69,7 +69,6 @@
     "cross-env": "^7.0.3",
     "hasbin": "^1.2.3",
     "micromark-extension-mdxjs": "^3.0.0",
-    "puppeteer": "^24.10.2",
     "request": "^2.88.2",
     "typescript": "^5.8.3"
   }
