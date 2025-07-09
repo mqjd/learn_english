@@ -3,12 +3,13 @@ import 'dotenv/config';
 import path from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
+import remarkImg from './plugins/remark-images-me/index.js';
 import options from './utils/default-options.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
 
 const config = {
-  pathPrefix: "/learn_english",
+  pathPrefix: '/learn_english',
   siteMetadata: {
     // You can overwrite values here that are used for the SEO component
     // You can also add new values here to query them like usual
@@ -58,7 +59,7 @@ const config = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         mdxOptions: {
-          remarkPlugins: [remarkGfm],
+          remarkPlugins: [remarkGfm, [remarkImg, { maxWidth: 300 }]],
           rehypePlugins: [rehypeMetaAsAttributes],
         },
         extensions: [`.mdx`, `.md`],

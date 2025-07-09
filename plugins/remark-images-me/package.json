@@ -1,0 +1,30 @@
+{
+  "name": "remark-images-me",
+  "version": "0.0.5",
+  "description": "remark images",
+  "type": "module",
+  "exports": {
+    "./plugins/remark-images-me": "./plugins/remark-images-me/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mqjd/remark-images-me.git"
+  },
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "graph",
+    "drawer",
+    "remark"
+  ],
+  "author": "Qiang Ma <mq1378415278@gmail.com> (https://github.com/mqjd)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mqjd/remark-images-me/issues"
+  },
+  "homepage": "https://github.com/mqjd/remark-images-me#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}
