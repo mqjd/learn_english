@@ -166,12 +166,9 @@ export const Masonry = ({ children }: MasonryProps) => {
             py: 2,
           }}
         >
-          <Label htmlFor="study-mode" sx={{ flex: 1 }}>
-            学习模式
-          </Label>
+          <Label sx={{ flex: 1 }}>学习模式</Label>
           <Box>
             <Switch
-              id="study-mode"
               sx={{ width: '40px' }}
               checked={studyMode}
               onChange={() => toogleStudyMode()}
