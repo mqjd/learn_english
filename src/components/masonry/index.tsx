@@ -147,9 +147,15 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
 };
 
 export const Masonry = ({ children }: MasonryProps) => {
-  const [studyMode, toogleStudyMode] = React.useState<boolean>(false);
+  const [studyMode, setStudyMode] = React.useState<boolean>(false);
   const [reset, setReset] = React.useState<boolean>(false);
   const context = { studyMode, reset };
+
+  const toogleStudyMode = () => {
+    setStudyMode(!studyMode);
+    setReset(!reset);
+  };
+
   return (
     <StudyContext.Provider value={context}>
       <div className="masonry-container">
@@ -168,7 +174,7 @@ export const Masonry = ({ children }: MasonryProps) => {
               id="enable-email-alerts"
               sx={{ width: '40px' }}
               checked={studyMode}
-              onChange={() => toogleStudyMode(!studyMode)}
+              onChange={() => toogleStudyMode()}
             />
           </Box>
           <Reset onClick={() => setReset(!reset)} />
