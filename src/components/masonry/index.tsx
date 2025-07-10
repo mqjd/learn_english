@@ -166,12 +166,12 @@ export const Masonry = ({ children }: MasonryProps) => {
             py: 2,
           }}
         >
-          <Label htmlFor="enable-email-alerts" sx={{ flex: 1 }}>
+          <Label htmlFor="study-mode" sx={{ flex: 1 }}>
             学习模式
           </Label>
           <Box>
             <Switch
-              id="enable-email-alerts"
+              id="study-mode"
               sx={{ width: '40px' }}
               checked={studyMode}
               onChange={() => toogleStudyMode()}
