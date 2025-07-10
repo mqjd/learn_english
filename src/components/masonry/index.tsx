@@ -77,7 +77,7 @@ const Reset = (props: any) => (
 
 export const MasonryItem = ({ title, children }: MasonryItemProps) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const [height, setHeight] = React.useState<string>('span 1');
+  const [height, setHeight] = React.useState<string>('span 5');
 
   const [contentColor, setContentColor] = React.useState<string>('text');
   const { studyMode, reset } = useStudyContext();
