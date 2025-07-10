@@ -10,9 +10,6 @@ githubUrl=https://mqjd:${GITHUB_TOKEN}@github.com/mqjd/learn_english.git
 
 npm install --legacy-peer-deps
 
-
-npm install --global serve
-
 # 部署github
 npm run build
 

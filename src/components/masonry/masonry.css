@@ -1,0 +1,64 @@
+.masonry-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+  grid-auto-rows: 10px;
+}
+
+.masonry-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 10px 5px var(--theme-ui-colors-shadow);
+  transition: all 0.3s ease;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.masonry-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--theme-ui-colors-shadow);
+}
+
+.masonry-item-title {
+  margin-top: 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--theme-ui-colors-gray-5);
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.masonry-item-content {
+  margin: 0;
+  flex-grow: 1;
+  position: relative;
+}
+
+.masonry-item img {
+  width: 100%;
+}
+
+.masonry-item-skeleton {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--theme-ui-colors-background);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.button {
+  cursor: pointer;
+  border-radius: 10%;
+}
+
+.button:hover {
+  background-color: var(--theme-ui-colors-gray-5);
+}

@@ -4,6 +4,7 @@ import * as React from "react";
 import { Text } from "theme-ui";
 import Code from "../components/blog/code";
 import Title from "../components/blog/title";
+import * as MasonryComponents from "../components/masonry";
 
 const components = {
   Text: ({ children, ...props }) => <Text {...props}>{children}</Text>,
@@ -12,6 +13,7 @@ const components = {
       {children}
     </Title>
   ),
+  ...MasonryComponents,
   pre: (preProps) => {
     const props = preToCodeBlock(preProps);
     // if there's a codeString and some props, we passed the test

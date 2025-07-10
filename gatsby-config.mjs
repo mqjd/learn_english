@@ -59,21 +59,13 @@ const config = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         mdxOptions: {
-          remarkPlugins: [remarkGfm, [remarkImg, { maxWidth: 300 }]],
+          remarkPlugins: [remarkGfm],
           rehypePlugins: [rehypeMetaAsAttributes],
         },
         extensions: [`.mdx`, `.md`],
         gatsbyRemarkPlugins: [
           `gatsby-remark-autolink-headers`,
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 960,
-              quality: 90,
-              linkImagesToOriginal: false,
-              backgroundColor: `transparent`,
-            },
-          },
+          `gatsby-remark-masonry`
         ],
       },
     },

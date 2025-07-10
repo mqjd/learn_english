@@ -1,8 +1,8 @@
-import { merge, ThemeUIStyleObject } from "theme-ui";
-import tailwind from "@theme-ui/preset-tailwind";
-import { lightThemeVars, darkThemeVars } from "../utils/prism-themes";
+import { merge, ThemeUIStyleObject } from 'theme-ui';
+import tailwind from '@theme-ui/preset-tailwind';
+import { lightThemeVars, darkThemeVars } from '../utils/prism-themes';
 
-declare module "theme-ui" {
+declare module 'theme-ui' {
   interface Theme {
     copyButton?: ThemeUIStyleObject;
     dividers?: ThemeUIStyleObject;
@@ -18,12 +18,12 @@ const theme = merge(tailwind, {
     ...lightThemeVars,
     toggleIcon: tailwind.colors.gray[8],
     heading: tailwind.colors.black,
-    highlight: "#28292a",
+    highlight: '#28292a',
     modes: {
       dark: {
         ...darkThemeVars,
-        highlight: "#28292a",
-        text: "#e3e3e3",
+        highlight: '#28292a',
+        text: '#e3e3e3',
         primary: tailwind.colors.purple[4],
         secondary: `#8a9ab0`,
         toggleIcon: tailwind.colors.gray[4],
@@ -32,14 +32,15 @@ const theme = merge(tailwind, {
         muted: tailwind.colors.gray[8],
         highlightLineBg: `rgba(255, 255, 255, 0.1)`,
         background: `#1f1f1f`,
+        shadow: `rgba(66, 66, 66, 0.7)`,
         plain: {
-          color: "#9CDCFE",
-          backgroundColor: "#28292a",
+          color: '#9CDCFE',
+          backgroundColor: '#28292a',
         },
       },
       light: {
         ...lightThemeVars,
-        highlight: "#e2e8f0",
+        highlight: '#e2e8f0',
         text: tailwind.colors.black,
         primary: tailwind.colors.purple[7],
         secondary: `#5f6c80`,
@@ -49,8 +50,9 @@ const theme = merge(tailwind, {
         muted: tailwind.colors.gray[2],
         highlightLineBg: `rgba(0, 0, 0, 0.035)`,
         background: `#fff`,
+        shadow: `rgba(33, 33, 33, 0.2)`,
         plain: {
-          backgroundColor: "#f8fafd",
+          backgroundColor: '#f8fafd',
         },
       },
     },
@@ -82,59 +84,59 @@ const theme = merge(tailwind, {
       },
     },
     p: {
-      fontSize: "1em",
+      fontSize: '1em',
       letterSpacing: `-0.003em`,
       lineHeight: `body`,
-      "--baseline-multiplier": 0.179,
-      "--x-height-multiplier": 0.35,
+      '--baseline-multiplier': 0.179,
+      '--x-height-multiplier': 0.35,
       wordBreak: `break-word`,
     },
     ul: {
       li: {
-        fontSize: "1em",
+        fontSize: '1em',
         letterSpacing: `-0.003em`,
         lineHeight: `body`,
-        "--baseline-multiplier": 0.179,
-        "--x-height-multiplier": 0.35,
+        '--baseline-multiplier': 0.179,
+        '--x-height-multiplier': 0.35,
       },
     },
     ol: {
       li: {
-        fontSize: "1em",
+        fontSize: '1em',
         letterSpacing: `-0.003em`,
         lineHeight: `body`,
-        "--baseline-multiplier": 0.179,
-        "--x-height-multiplier": 0.35,
+        '--baseline-multiplier': 0.179,
+        '--x-height-multiplier': 0.35,
       },
     },
     h1: {
       variant: `text.heading`,
-      fontSize: ["2em", "2.25em", "2.25em", "3em"],
+      fontSize: ['2em', '2.25em', '2.25em', '3em'],
       mt: 4,
     },
     h2: {
       variant: `text.heading`,
-      fontSize: ["1.875em", "2em", "2em", "2.25em"],
+      fontSize: ['1.875em', '2em', '2em', '2.25em'],
       mt: 4,
     },
     h3: {
       variant: `text.heading`,
-      fontSize: ["1.5em", "1.875em", "1.875em", "2em"],
+      fontSize: ['1.5em', '1.875em', '1.875em', '2em'],
       mt: 4,
     },
     h4: {
       variant: `text.heading`,
-      fontSize: ["1.25em", "1.5em", "1.5em", "1.875em"],
+      fontSize: ['1.25em', '1.5em', '1.5em', '1.875em'],
       mt: 3,
     },
     h5: {
       variant: `text.heading`,
-      fontSize: ["1em", "1.25em", "1.25em", "1.5em"],
+      fontSize: ['1em', '1.25em', '1.25em', '1.5em'],
       mt: 3,
     },
     h6: {
       variant: `text.heading`,
-      fontSize: "1em",
+      fontSize: '1em',
       mb: 2,
     },
     blockquote: {
@@ -142,11 +144,11 @@ const theme = merge(tailwind, {
       borderLeftStyle: `solid`,
       borderLeftWidth: `0.5em`,
       borderRadius: `4px`,
-      bg: "highlight",
+      bg: 'highlight',
       mx: 0,
-      pl: "1em",
-      pt: "0.5em",
-      pb: "0.5em",
+      pl: '1em',
+      pt: '0.5em',
+      pb: '0.5em',
       p: {
         fontStyle: `italic`,
         mt: 0,
@@ -226,10 +228,10 @@ const theme = merge(tailwind, {
     fontFamily: `body`,
     letterSpacing: `0.025rem`,
     transition: `all 0.3s ease-in-out`,
-    "&[disabled]": {
+    '&[disabled]': {
       cursor: `not-allowed`,
     },
-    ":not([disabled]):hover": {
+    ':not([disabled]):hover': {
       bg: `primary`,
       color: `white`,
     },
@@ -257,30 +259,30 @@ const theme = merge(tailwind, {
     secondary: {
       color: `secondary`,
       textDecoration: `none`,
-      ":hover": {
+      ':hover': {
         color: `heading`,
         textDecoration: `underline`,
       },
-      ":focus": {
+      ':focus': {
         color: `heading`,
       },
     },
     listItem: {
-      fontSize: ["1em", "1.25em"],
+      fontSize: ['1em', '1.25em'],
       color: `text`,
     },
   },
   messages: {
     undefined: {
-      borderLeftWidth: "0.5em",
+      borderLeftWidth: '0.5em',
     },
   },
   buttons: {
     primary: {
-      bg: "highlight",
-      cursor: "pointer",
-      color: "text",
-      "&:hover": {
+      bg: 'highlight',
+      cursor: 'pointer',
+      color: 'text',
+      '&:hover': {
         bg: `secondary`,
       },
     },
@@ -290,8 +292,8 @@ const theme = merge(tailwind, {
       fill: `text`,
     },
     indicator: {
-      default: "text",
-      current: "#03a9f4",
+      default: 'text',
+      current: '#03a9f4',
     },
   },
 });

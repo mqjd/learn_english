@@ -1,0 +1,30 @@
+{
+  "name": "gatsby-remark-masonry",
+  "version": "0.0.5",
+  "description": "remark images",
+  "type": "module",
+  "exports": {
+    "./plugins/gatsby-remark-masonry": "./plugins/gatsby-remark-masonry/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mqjd/gatsby-remark-masonry.git"
+  },
+  "main": "index.js",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "graph",
+    "drawer",
+    "remark"
+  ],
+  "author": "Qiang Ma <mq1378415278@gmail.com> (https://github.com/mqjd)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mqjd/gatsby-remark-masonry/issues"
+  },
+  "homepage": "https://github.com/mqjd/gatsby-remark-masonry#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}
