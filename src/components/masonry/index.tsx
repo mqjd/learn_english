@@ -105,7 +105,12 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
     const handleResize = () => {
       updateHeight();
     };
+    // window.addEventListener('resize', handleResize);
 
+    // // 清理函数
+    // return () => {
+    //   window.removeEventListener('resize', handleResize);
+    // };
   }, [children]);
   return (
     <div className="masonry-item" style={{ gridRowEnd: height }}>
