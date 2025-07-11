@@ -166,7 +166,9 @@ export const Masonry = ({ children }: MasonryProps) => {
             py: 2,
           }}
         >
-          <Label sx={{ flex: 1 }}>学习模式</Label>
+          <Label sx={{ flex: 1, color: `var(--theme-ui-colors-tag-color)` }}>
+            Study Mode
+          </Label>
           <Box>
             <Switch
               sx={{ width: '40px' }}
