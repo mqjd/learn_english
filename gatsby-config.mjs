@@ -3,7 +3,6 @@ import 'dotenv/config';
 import path from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
-import remarkImg from './plugins/remark-images-me/index.js';
 import options from './utils/default-options.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const shouldAnalyseBundle = process.env.ANALYSE_BUNDLE;
@@ -65,7 +64,13 @@ const config = {
         extensions: [`.mdx`, `.md`],
         gatsbyRemarkPlugins: [
           `gatsby-remark-autolink-headers`,
-          `gatsby-remark-masonry`
+          `gatsby-remark-masonry`,
+          // {
+          //   resolve: `gatsby-remark-cache-remote-images`,
+          //   options: {
+          //     saveImageTo: `${__dirname}/public/`,
+          //   },
+          // },
         ],
       },
     },
