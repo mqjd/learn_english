@@ -1,12 +1,13 @@
 /** @jsx jsx */
-import type { HeadFC, PageProps } from "gatsby";
-import * as React from "react";
-import { jsx, Heading } from "theme-ui";
-import Layout from "./layout";
-import ItemTags from "./item-tags";
-import Seo from "./seo";
-import PostFooter from "./post-footer";
-import "./post.css";
+import type { HeadFC, PageProps } from 'gatsby';
+import * as React from 'react';
+import { jsx, Heading } from 'theme-ui';
+import Layout from './layout';
+import ItemTags from './item-tags';
+import Seo from './seo';
+import PostFooter from './post-footer';
+import './post.css';
+import { TableOfContentItemProps } from './table-of-content';
 
 export type MBPostProps = {
   post: {
@@ -29,13 +30,16 @@ export type MBPostProps = {
       };
     };
   };
+  mdx: {
+    tableOfContents: TableOfContentItemProps;
+  };
 };
 
 const px = [`16px`, `8px`, `4px`];
 const shadow = px.map((v) => `rgba(0, 0, 0, 0.1) 0px ${v} ${v} 0px`);
 
 const Post: React.FC<React.PropsWithChildren<PageProps<MBPostProps>>> = ({
-  data: { post },
+  data: { post, mdx },
   children,
 }) => (
   <Layout>
@@ -47,7 +51,7 @@ const Post: React.FC<React.PropsWithChildren<PageProps<MBPostProps>>> = ({
         color: `secondary`,
         mt: 3,
         a: { color: `secondary` },
-        fontSize: ["1em", "1.25em"],
+        fontSize: ['1em', '1.25em'],
       }}
     >
       <time>{post.date}</time>
@@ -64,11 +68,11 @@ const Post: React.FC<React.PropsWithChildren<PageProps<MBPostProps>>> = ({
       className="post"
       sx={{
         my: 5,
-        ".gatsby-resp-image-wrapper": {
+        '.gatsby-resp-image-wrapper': {
           my: [4, 4, 5],
           borderRadius: `4px`,
           boxShadow: shadow.join(`, `),
-          ".gatsby-resp-image-image": {
+          '.gatsby-resp-image-image': {
             borderRadius: `4px`,
           },
         },
@@ -77,7 +81,7 @@ const Post: React.FC<React.PropsWithChildren<PageProps<MBPostProps>>> = ({
     >
       {children}
     </section>
-    <PostFooter post={post} />
+    <PostFooter post={post} mdx={mdx} />
   </Layout>
 );
 

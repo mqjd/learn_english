@@ -34,5 +34,8 @@ export const query = graphql`
         }
       }
     }
+    mdx(frontmatter: {slug: {eq: $slug}}) {
+      tableOfContents
+    }
   }
 `;

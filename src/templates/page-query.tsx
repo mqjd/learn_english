@@ -17,5 +17,8 @@ export const query = graphql`
       slug
       excerpt
     }
+    mdx(frontmatter: {slug: {eq: $slug}}) {
+      tableOfContents
+    }
   }
 `;
