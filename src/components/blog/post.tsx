@@ -7,7 +7,8 @@ import ItemTags from './item-tags';
 import Seo from './seo';
 import PostFooter from './post-footer';
 import './post.css';
-import { TableOfContentItemProps } from './table-of-content';
+import type { TableOfContentItemProps } from './table-of-content';
+import { TableOfContent } from './table-of-content';
 
 export type MBPostProps = {
   post: {
@@ -81,6 +82,7 @@ const Post: React.FC<React.PropsWithChildren<PageProps<MBPostProps>>> = ({
     >
       {children}
     </section>
+    <TableOfContent {...mdx.tableOfContents} />
     <PostFooter post={post} mdx={mdx} />
   </Layout>
 );

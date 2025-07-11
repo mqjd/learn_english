@@ -1,0 +1,33 @@
+/* CSS to fix TableOfContent on the right side of the screen */
+.table-of-content {
+  position: fixed;
+  max-height: 60%;
+  left: calc(50% + 512px);
+  width: calc(50% - 512px);
+  top: 50%;
+  overflow: auto;
+  transform: translateY(-50%);
+  border: 1px solid var(--theme-ui-colors-muted);
+  padding: 0.5em 1em;
+}
+
+.table-of-content-group {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.table-of-content-item {
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.table-of-content-link {
+  text-decoration: none;
+}
+
+@media (max-width: 1400px) {
+  .table-of-content {
+    display: none;
+  }
+}
