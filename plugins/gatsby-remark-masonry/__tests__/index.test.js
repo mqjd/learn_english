@@ -6,6 +6,7 @@ import plugin from '../';
 
 const md = `
 
+# title
 
 { /* table-style: masonry;theme:dark */ }
 

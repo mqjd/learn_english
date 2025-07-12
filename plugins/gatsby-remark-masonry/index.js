@@ -27,6 +27,7 @@ const plugin = ({ markdownNode, markdownAST }) => {
   visit(markdownAST, 'root', (node) => {
     const { children } = node;
     let index = 0;
+    let hasMasonry = false;
     do {
       const item = children[index];
       const param = extractTableParams(item);
@@ -56,10 +57,21 @@ const plugin = ({ markdownNode, markdownAST }) => {
             attributes: [],
           };
           children.splice(index, 1, masonryNode);
+          hasMasonry = true;
         }
       }
       index++;
     } while (index < children.length);
+    if (hasMasonry) {
+      const globalMasonryNode = {
+        type: 'mdxJsxFlowElement',
+        name: 'GlobalMasonry',
+        children: children,
+        position: children[0].position,
+        attributes: [],
+      };
+      markdownAST.children = [globalMasonryNode];
+    }
   });
 };
 

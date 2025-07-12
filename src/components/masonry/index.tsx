@@ -3,7 +3,12 @@ import * as React from 'react';
 import { jsx } from 'theme-ui';
 import './masonry.css';
 import { Box, Flex, Label, Switch, IconButton } from 'theme-ui';
-import { StudyContext, useStudyContext } from './use-study';
+import {
+  StudyContext,
+  useStudyContext,
+  GlobalStudyContext,
+  useGlobalStudyContext,
+} from './use-study';
 
 type MasonryItemProps = {
   title: string;
@@ -147,9 +152,20 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
 };
 
 export const Masonry = ({ children }: MasonryProps) => {
+  const { studyMode: globalStudyMode, reset: globalReset } =
+    useGlobalStudyContext();
+
   const [studyMode, setStudyMode] = React.useState<boolean>(false);
   const [reset, setReset] = React.useState<boolean>(false);
   const context = { studyMode, reset };
+
+  React.useEffect(() => {
+    setStudyMode(globalStudyMode);
+  }, [globalStudyMode]);
+
+  React.useEffect(() => {
+    setReset(!reset);
+  }, [globalReset]);
 
   const toogleStudyMode = () => {
     setStudyMode(!studyMode);
@@ -181,5 +197,40 @@ export const Masonry = ({ children }: MasonryProps) => {
         <div className="masonry-grid">{children}</div>
       </div>
     </StudyContext.Provider>
+  );
+};
+
+export const GlobalMasonry = ({ children }: MasonryProps) => {
+  const [studyMode, setGlobalStudyMode] = React.useState<boolean>(false);
+  const [reset, setGlobalReset] = React.useState<boolean>(false);
+  const context = { studyMode, reset };
+  const toogleGlobalStudyMode = () => {
+    setGlobalStudyMode(!studyMode);
+    setGlobalReset(!reset);
+  };
+
+  return (
+    <GlobalStudyContext.Provider value={context}>
+      <Flex
+        sx={{
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          py: 2,
+        }}
+      >
+        <Label sx={{ flex: 1, color: `var(--theme-ui-colors-tag-color)` }}>
+          Global Study Mode
+        </Label>
+        <Box>
+          <Switch
+            sx={{ width: '40px' }}
+            checked={studyMode}
+            onChange={() => toogleGlobalStudyMode()}
+          />
+        </Box>
+        <Reset onClick={() => setGlobalReset(!reset)} />
+      </Flex>
+      {children}
+    </GlobalStudyContext.Provider>
   );
 };
