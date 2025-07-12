@@ -22,7 +22,7 @@ const options = {
   externalLinks: [
     {
       name: `Github`,
-      url: `https://github.com/mqjd`,
+      url: `https://github.com/mqjd/learn_english`,
     },
   ],
   showLineNumbers: true,
