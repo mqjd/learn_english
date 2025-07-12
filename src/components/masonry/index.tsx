@@ -136,7 +136,7 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
               onClick={() => setContentColor('var(--theme-ui-colors-red-5)')}
             />
             <Right
-              onClick={() => setContentColor('var(--theme-ui-colors-text)')}
+              onClick={() => setContentColor('var(--theme-ui-colors-green-5)')}
             />
           </div>
         )}
