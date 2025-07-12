@@ -13,9 +13,9 @@ const config = {
     // You can overwrite values here that are used for the SEO component
     // You can also add new values here to query them like usual
     // See all options: https://github.com/LekoArts/gatsby-themes/blob/main/themes/gatsby-theme-minimal-blog/gatsby-config.mjs
-    siteTitle: `English`,
-    siteTitleAlt: `English`,
-    siteHeadline: `English - Gatsby Theme based on @lekoarts`,
+    siteTitle: `MQ's English Learning`,
+    siteTitleAlt: `MQ's English Learning`,
+    siteHeadline: `MQ's English Learning - Gatsby Theme based on @lekoarts`,
     siteUrl: `https://minimal-blog.lekoarts.de`,
     siteDescription: `Typography driven, feature-rich blogging theme with minimal aesthetics. Includes tags/categories support and extensive features for code blocks such as live preview, line numbers, and line highlighting.`,
     siteImage: `/banner.jpg`,
