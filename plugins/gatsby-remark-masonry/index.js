@@ -65,7 +65,7 @@ const plugin = ({ markdownNode, markdownAST }) => {
               { type: 'mdxJsxAttribute', name: 'useStudyMode', value: useStudyMode }
             ]
           }
-          itemCount += masonryItems.length
+          useStudyMode && (itemCount += masonryItems.length)
           children.splice(index, 1, masonryNode)
           hasMasonry = true
         }
