@@ -14,8 +14,8 @@ export type StudyContextType = {
   resetSwitch: boolean
   successCount: number
   failedCount: number
-  addSuccessCount: () => void
-  addFailedCount: () => void
+  addSuccessCount: (num?: number) => void
+  addFailedCount: (num?: number) => void
 }
 
 export const StudyContext = createContext<StudyContextType>({} as StudyContextType)
