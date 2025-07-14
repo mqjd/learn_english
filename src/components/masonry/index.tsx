@@ -248,7 +248,7 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
 
   const masonryItems = children
     .filter((v) => React.isValidElement<MasonryProps>(v))
-    .filter((v) => (v as any).type.displayName.indexOf('Masonry') != -1)
+    .filter((v) => (v as any).type?.displayName?.indexOf('Masonry') != -1)
     .flatMap((v) => v && v.props.children)
 
   return (
