@@ -33,9 +33,9 @@ const plugin = ({ markdownNode, markdownAST }) => {
     do {
       const item = children[index]
       const param = extractTableParams(item)
-      const useStudyMode = param.useStudyMode !== 'false'
-      globalUseStudyMode = globalUseStudyMode || useStudyMode
       if (param) {
+        const useStudyMode = param.useStudyMode !== 'false'
+        globalUseStudyMode = globalUseStudyMode || useStudyMode
         children.splice(index, 1)
         const tableNode = children[index]
         if (param['table-style'] === 'masonry' && tableNode.type === 'table') {
