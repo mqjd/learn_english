@@ -62,7 +62,7 @@ const Wrong = (props: any) => (
 )
 
 const Cry = (props: any) => (
-  <IconButton {...props} className="button" size="1.5em">
+  <IconButton {...props} className="button" size="1.5em" sx={{ p: 0 }}>
     <svg
       viewBox="0 0 1024 1024"
       version="1.1"
