@@ -1,10 +1,28 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react'
 
-export const StudyContext = createContext({ studyMode: false, reset: false });
-export const GlobalStudyContext = createContext({
-  studyMode: false,
-  reset: false,
-});
+export type GlobalStudyContextType = {
+  globalStudySwitch: boolean
+  globalResetSwitch: boolean
+  globalSuccessCount: number
+  globalFailedCount: number
+  addGlobalSuccessCount: (num?: number) => void
+  addGlobalFailedCount: (num?: number) => void
+}
 
-export const useStudyContext = () => useContext(StudyContext);
-export const useGlobalStudyContext = () => useContext(GlobalStudyContext);
+export type StudyContextType = {
+  studySwitch: boolean
+  resetSwitch: boolean
+  successCount: number
+  failedCount: number
+  addSuccessCount: () => void
+  addFailedCount: () => void
+}
+
+export const StudyContext = createContext<StudyContextType>({} as StudyContextType)
+export const GlobalStudyContext = createContext<GlobalStudyContextType>(
+  {} as GlobalStudyContextType
+)
+
+export const useStudyContext = () => useContext<StudyContextType>(StudyContext)
+
+export const useGlobalStudyContext = () => useContext<GlobalStudyContextType>(GlobalStudyContext)

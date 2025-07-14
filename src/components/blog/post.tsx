@@ -82,7 +82,7 @@ const Post: React.FC<React.PropsWithChildren<PageProps<MBPostProps>>> = ({
     >
       {children}
     </section>
-    <TableOfContent {...mdx.tableOfContents} />
+    {mdx.tableOfContents.items && <TableOfContent {...mdx.tableOfContents} />}
     <PostFooter post={post} mdx={mdx} />
   </Layout>
 );
