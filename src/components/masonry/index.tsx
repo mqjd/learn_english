@@ -122,7 +122,7 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
 
   React.useEffect(() => {
     setContentColor('text')
-  }, [globalResetSwitch, globalStudySwitch])
+  }, [globalResetSwitch])
 
   const markSuccess = () => {
     setContentColor('var(--theme-ui-colors-green-5)')
@@ -179,7 +179,7 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
         }}
       >
         {title}
-        {globalStudySwitch === true && contentColor !== 'text' && (
+        {globalStudySwitch === true && contentColor === 'var(--theme-ui-colors-green-5)' && (
           <Cry onClick={() => reMarkFailed()} />
         )}
       </div>
@@ -226,9 +226,9 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
   }
 
   const toogleGlobalStudyMode = () => {
+    resetStudy()
+    setAdvancedStudySwitch(!globalStudySwitch)
     setGlobalStudyMode(!globalStudySwitch)
-    setGlobalReset(!globalResetSwitch)
-    setAdvancedStudySwitch(!advancedStudySwitch)
   }
 
   const resetStudy = () => {
