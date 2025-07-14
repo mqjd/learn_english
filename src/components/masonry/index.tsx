@@ -17,6 +17,7 @@ type MasonryItemProps = {
 
 type MasonryProps = {
   itemCount: number
+  useStudyMode: boolean
   children: React.ReactNode[]
 }
 
@@ -162,7 +163,7 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
   )
 }
 
-export const Masonry = ({ children, itemCount }: MasonryProps) => {
+export const Masonry = ({ children, itemCount, useStudyMode }: MasonryProps) => {
   const { globalStudySwitch, globalResetSwitch, addGlobalSuccessCount, addGlobalFailedCount } =
     useGlobalStudyContext()
 
@@ -213,37 +214,40 @@ export const Masonry = ({ children, itemCount }: MasonryProps) => {
   return (
     <StudyContext.Provider value={context}>
       <div className="masonry-container">
-        <Flex
-          sx={{
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            py: 2
-          }}
-        >
-          <Label sx={{ flex: 1, color: `var(--theme-ui-colors-tag-color)` }}>Study Mode</Label>
-          <span sx={{ mr: '1em' }}>
-            <span sx={{ color: `var(--theme-ui-colors-grey-5)` }}>
-              {itemCount - successCount - failedCount}
+        {useStudyMode && (
+          <Flex
+            sx={{
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              py: 2
+            }}
+          >
+            <Label sx={{ flex: 1, color: `var(--theme-ui-colors-tag-color)` }}>Study Mode</Label>
+            <span sx={{ mr: '1em' }}>
+              <span sx={{ color: `var(--theme-ui-colors-grey-5)` }}>
+                {itemCount - successCount - failedCount}
+              </span>
+              <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{successCount}</span>
+              <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{failedCount}</span>
             </span>
-            <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{successCount}</span>
-            <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{failedCount}</span>
-          </span>
-          <Box>
-            <Switch
-              sx={{ width: '40px' }}
-              checked={studySwitch}
-              onChange={() => toogleStudyMode()}
-            />
-          </Box>
-          <Reset onClick={resetStudy} />
-        </Flex>
+            <Box>
+              <Switch
+                sx={{ width: '40px' }}
+                checked={studySwitch}
+                onChange={() => toogleStudyMode()}
+              />
+            </Box>
+            <Reset onClick={resetStudy} />
+          </Flex>
+        )}
+
         <div className="masonry-grid">{children}</div>
       </div>
     </StudyContext.Provider>
   )
 }
 
-export const GlobalMasonry = ({ children, itemCount }: MasonryProps) => {
+export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProps) => {
   const [globalStudySwitch, setGlobalStudyMode] = React.useState<boolean>(false)
   const [globalResetSwitch, setGlobalReset] = React.useState<boolean>(false)
   const [globalSuccessCount, setGlobalSuccessCount] = React.useState<number>(0)
@@ -279,30 +283,34 @@ export const GlobalMasonry = ({ children, itemCount }: MasonryProps) => {
 
   return (
     <GlobalStudyContext.Provider value={context}>
-      <Flex
-        sx={{
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          py: 2
-        }}
-      >
-        <Label sx={{ flex: 1, color: `var(--theme-ui-colors-tag-color)` }}>Global Study Mode</Label>
-        <span sx={{ mr: '1em' }}>
-          <span sx={{ color: `var(--theme-ui-colors-grey-5)` }}>
-            {itemCount - globalSuccessCount - globalFailedCount}
+      {useStudyMode && (
+        <Flex
+          sx={{
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            py: 2
+          }}
+        >
+          <Label sx={{ flex: 1, color: `var(--theme-ui-colors-tag-color)` }}>
+            Global Study Mode
+          </Label>
+          <span sx={{ mr: '1em' }}>
+            <span sx={{ color: `var(--theme-ui-colors-grey-5)` }}>
+              {itemCount - globalSuccessCount - globalFailedCount}
+            </span>
+            <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{globalSuccessCount}</span>
+            <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{globalFailedCount}</span>
           </span>
-          <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{globalSuccessCount}</span>
-          <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{globalFailedCount}</span>
-        </span>
-        <Box>
-          <Switch
-            sx={{ width: '40px' }}
-            checked={globalStudySwitch}
-            onChange={() => toogleGlobalStudyMode()}
-          />
-        </Box>
-        <Reset onClick={resetStudy} />
-      </Flex>
+          <Box>
+            <Switch
+              sx={{ width: '40px' }}
+              checked={globalStudySwitch}
+              onChange={() => toogleGlobalStudyMode()}
+            />
+          </Box>
+          <Reset onClick={resetStudy} />
+        </Flex>
+      )}
       {children}
     </GlobalStudyContext.Provider>
   )
