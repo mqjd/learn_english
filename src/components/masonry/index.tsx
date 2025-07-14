@@ -122,7 +122,7 @@ export const MasonryItem = ({ title, children }: MasonryItemProps) => {
 
   React.useEffect(() => {
     setContentColor('text')
-  }, [globalResetSwitch])
+  }, [globalResetSwitch, globalStudySwitch])
 
   const markSuccess = () => {
     setContentColor('var(--theme-ui-colors-green-5)')
