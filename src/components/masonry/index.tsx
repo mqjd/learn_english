@@ -266,8 +266,12 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
             <span sx={{ color: `var(--theme-ui-colors-grey-5)` }}>
               {itemCount - globalSuccessCount - globalFailedCount}
             </span>
-            <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{globalSuccessCount}</span>
-            <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{globalFailedCount}</span>
+            {advancedStudySwitch && (
+              <span>
+                <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{globalSuccessCount}</span>
+                <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{globalFailedCount}</span>
+              </span>
+            )}
           </span>
           <Box>
             <Switch
