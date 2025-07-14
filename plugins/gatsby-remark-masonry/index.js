@@ -37,7 +37,7 @@ const plugin = ({ markdownNode, markdownAST }) => {
         children.splice(index, 1)
         const tableNode = children[index]
         if (param['table-style'] === 'masonry' && tableNode.type === 'table') {
-          const useStudyMode = param.useStudyMode !== 'false'
+          const useStudyMode = param['study-mode'] === 'true'
           globalUseStudyMode = globalUseStudyMode || useStudyMode
           const rows = tableNode.children.slice(1)
           const masonryItems = rows.map((row) => {
