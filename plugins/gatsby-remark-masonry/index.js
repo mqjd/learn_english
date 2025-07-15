@@ -29,7 +29,7 @@ const plugin = ({ markdownNode, markdownAST }) => {
     let index = 0
     let hasMasonry = false
     let itemCount = 0
-    let globalUseStudyMode = false
+    let globalUseStudyMode = true
     do {
       const item = children[index]
       const param = extractTableParams(item)
@@ -38,15 +38,20 @@ const plugin = ({ markdownNode, markdownAST }) => {
         const tableNode = children[index]
         if (param['table-style'] === 'masonry' && tableNode.type === 'table') {
           const useStudyMode = param['study-mode'] === 'true'
-          globalUseStudyMode = globalUseStudyMode || useStudyMode
+          globalUseStudyMode = useStudyMode !== 'false' || !globalUseStudyMode
           const rows = tableNode.children.slice(1)
           const masonryItems = rows.map((row) => {
+            itemCount++
             const [titleCell, contentCell] = row.children
             const title = titleCell.children[0].value
             return {
               type: 'mdxJsxFlowElement',
               name: 'MasonryItem',
-              attributes: [{ type: 'mdxJsxAttribute', name: 'title', value: title }],
+              attributes: [
+                { type: 'mdxJsxAttribute', name: 'title', value: title },
+                { type: 'mdxJsxAttribute', name: 'index', value: itemCount },
+                { type: 'mdxJsxAttribute', name: 'key', value: itemCount }
+              ],
               position: row.position,
               children: contentCell.children
             }
@@ -65,7 +70,6 @@ const plugin = ({ markdownNode, markdownAST }) => {
               { type: 'mdxJsxAttribute', name: 'useStudyMode', value: useStudyMode }
             ]
           }
-          useStudyMode && (itemCount += masonryItems.length)
           children.splice(index, 1, masonryNode)
           hasMasonry = true
         }

@@ -1,12 +1,13 @@
 import { createContext, useContext } from 'react'
 
 export type GlobalStudyContextType = {
+  masonryItemState: Record<number, boolean>
   globalStudySwitch: boolean
   globalResetSwitch: boolean
   globalSuccessCount: number
   globalFailedCount: number
-  addGlobalSuccessCount: (num?: number) => void
-  addGlobalFailedCount: (num?: number) => void
+  markGlobalSuccess: (num: number) => void
+  markGlobalFailure: (num: number) => void
 }
 
 export type StudyContextType = {
@@ -14,8 +15,6 @@ export type StudyContextType = {
   resetSwitch: boolean
   successCount: number
   failedCount: number
-  addSuccessCount: (num?: number) => void
-  addFailedCount: (num?: number) => void
 }
 
 export const StudyContext = createContext<StudyContextType>({} as StudyContextType)
