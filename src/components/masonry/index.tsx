@@ -58,7 +58,12 @@ const Wrong = (props: any) => (
 )
 
 const Cry = (props: any) => (
-  <IconButton {...props} className="button" size="1.5em" sx={{ p: 0 }}>
+  <IconButton
+    {...props}
+    className="button"
+    size="1.5em"
+    sx={{ p: 0, position: 'absolute', top: '25px', right: '5px' }}
+  >
     <svg
       viewBox="0 0 1024 1024"
       version="1.1"
@@ -144,7 +149,7 @@ export const MasonryItem = ({ title, children, index }: MasonryItemProps) => {
     if (contentRef.current && tittleRef.current && !height) {
       const measuredTittleHeight = tittleRef.current.getBoundingClientRect().height
       const measuredContentHeight = contentRef.current.getBoundingClientRect().height
-      const totalHeight = measuredContentHeight + measuredTittleHeight + paddingHeight + 1
+      const totalHeight = measuredContentHeight + measuredTittleHeight + paddingHeight + 1 - 10
       setHeight(`span ${Math.ceil(totalHeight / 30 + 1)}`)
     }
   }
