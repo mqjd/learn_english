@@ -261,6 +261,7 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
 
   const resetStudy = () => {
     setGlobalReset(!globalResetSwitch)
+    setShowErrorsOnlySwitch(false)
     setGlobalSuccessCount(0)
     setGlobalFailedCount(0)
     setMasonryItem({})
