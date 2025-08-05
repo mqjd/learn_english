@@ -29,7 +29,6 @@ const plugin = ({ markdownNode, markdownAST }) => {
     let index = 0
     let hasMasonry = false
     let itemCount = 0
-    let globalUseStudyMode = true
     do {
       const item = children[index]
       const param = extractTableParams(item)
@@ -38,22 +37,21 @@ const plugin = ({ markdownNode, markdownAST }) => {
         const tableNode = children[index]
         if (param['table-style'] === 'masonry' && tableNode.type === 'table') {
           const useStudyMode = param['study-mode'] === 'true'
-          globalUseStudyMode = useStudyMode !== 'false' || !globalUseStudyMode
           const rows = tableNode.children.slice(1)
-          const masonryItems = rows.map((row) => {
-            itemCount++
+          const masonryItems = rows.map((row, itemIndex) => {
+            useStudyMode && itemCount++
             const [titleCell, contentCell] = row.children
-            const title = titleCell.children[0].value
+            const title = row.children.length === 2 ? titleCell.children[0].value : ''
             return {
               type: 'mdxJsxFlowElement',
               name: 'MasonryItem',
               attributes: [
                 { type: 'mdxJsxAttribute', name: 'title', value: title },
                 { type: 'mdxJsxAttribute', name: 'index', value: itemCount },
-                { type: 'mdxJsxAttribute', name: 'key', value: itemCount }
+                { type: 'mdxJsxAttribute', name: 'key', value: `${index} - ${itemIndex}` }
               ],
               position: row.position,
-              children: contentCell.children
+              children: contentCell?.children || titleCell?.children
             }
           })
           const masonryNode = {
@@ -84,7 +82,7 @@ const plugin = ({ markdownNode, markdownAST }) => {
         position: children[0].position,
         attributes: [
           { type: 'mdxJsxAttribute', name: 'itemCount', value: itemCount },
-          { type: 'mdxJsxAttribute', name: 'useStudyMode', value: globalUseStudyMode }
+          { type: 'mdxJsxAttribute', name: 'useStudyMode', value: itemCount > 0 }
         ]
       }
       markdownAST.children = [globalMasonryNode]

@@ -13,7 +13,7 @@ type MasonryItemProps = {
 
 type MasonryProps = {
   itemCount: number
-  useStudyMode: boolean
+  useStudyMode: string
   children: React.ReactNode[]
 }
 
@@ -146,8 +146,8 @@ export const MasonryItem = ({ title, children, index }: MasonryItemProps) => {
   }
 
   const updateHeight = () => {
-    if (contentRef.current && tittleRef.current && !height) {
-      const measuredTittleHeight = tittleRef.current.getBoundingClientRect().height
+    if (contentRef.current && !height) {
+      const measuredTittleHeight = tittleRef?.current?.getBoundingClientRect().height || 0
       const measuredContentHeight = contentRef.current.getBoundingClientRect().height
       const totalHeight = measuredContentHeight + measuredTittleHeight + paddingHeight + 1 - 10
       setHeight(`span ${Math.ceil(totalHeight / 30 + 1)}`)
@@ -174,19 +174,21 @@ export const MasonryItem = ({ title, children, index }: MasonryItemProps) => {
   }, [children])
   return (
     <div className="masonry-item" style={{ gridRowEnd: height }}>
-      <div
-        className="masonry-item-title"
-        ref={tittleRef}
-        sx={{
-          borderBottomColor: `text`,
-          color: contentColor
-        }}
-      >
-        {title}
-        {globalStudySwitch === true && contentColor === successColor && (
-          <Cry onClick={() => reMarkFailed()} />
-        )}
-      </div>
+      {title && (
+        <div
+          className="masonry-item-title"
+          ref={tittleRef}
+          sx={{
+            borderBottomColor: `text`,
+            color: contentColor
+          }}
+        >
+          {title}
+          {globalStudySwitch === true && contentColor === successColor && (
+            <Cry onClick={() => reMarkFailed()} />
+          )}
+        </div>
+      )}
       <div
         className="masonry-item-content"
         ref={contentRef}
@@ -280,8 +282,8 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
   const masonryItems = children
     .filter((v) => React.isValidElement<MasonryProps>(v))
     .filter((v) => (v as any).type?.displayName?.indexOf('Masonry') != -1)
+    .filter((v) => v.props.useStudyMode === 'true')
     .flatMap((v) => v && v.props.children)
-
   const selectedMasonryItems = React.useMemo(() => {
     if (!showErrorsOnlySwitch) return masonryItems
     return masonryItems
@@ -330,7 +332,7 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
         </Flex>
       )}
       {advancedStudySwitch ? (
-        <Masonry children={selectedMasonryItems} itemCount={itemCount} useStudyMode></Masonry>
+        <Masonry children={selectedMasonryItems} itemCount={itemCount} useStudyMode={useStudyMode}></Masonry>
       ) : (
         children
       )}
