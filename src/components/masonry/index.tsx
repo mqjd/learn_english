@@ -313,13 +313,6 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
               </span>
             )}
           </span>
-          <Label sx={{ width: 'auto' }}>
-            <Switch
-              sx={{ width: '40px' }}
-              checked={globalStudySwitch}
-              onChange={() => toogleGlobalStudyMode()}
-            />
-          </Label>
           {advancedStudySwitch && (
             <Label sx={{ width: 'auto' }}>
               <Checkbox
@@ -328,11 +321,22 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
               />
             </Label>
           )}
+          <Label sx={{ width: 'auto' }}>
+            <Switch
+              sx={{ width: '40px' }}
+              checked={globalStudySwitch}
+              onChange={() => toogleGlobalStudyMode()}
+            />
+          </Label>
           <Reset onClick={resetStudy} />
         </Flex>
       )}
       {advancedStudySwitch ? (
-        <Masonry children={selectedMasonryItems} itemCount={itemCount} useStudyMode={useStudyMode}></Masonry>
+        <Masonry
+          children={selectedMasonryItems}
+          itemCount={itemCount}
+          useStudyMode={useStudyMode}
+        ></Masonry>
       ) : (
         children
       )}
