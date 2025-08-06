@@ -19,7 +19,6 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  grid-row-end: 4;
 }
 
 .masonry-item:hover {
