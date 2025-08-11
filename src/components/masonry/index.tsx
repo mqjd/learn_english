@@ -3,7 +3,7 @@ import * as React from 'react'
 import { jsx } from 'theme-ui'
 import './masonry.css'
 import { Flex, Label, Switch, IconButton, Checkbox } from 'theme-ui'
-import { GlobalStudyContext, useGlobalStudyContext } from './use-study'
+import { GlobalStudyContext, useGlobalStudyContext, useMasonryState } from './use-study'
 
 type MasonryItemProps = {
   title: string
@@ -90,7 +90,7 @@ const Cry = (props: any) => (
 )
 
 const Reset = (props: any) => (
-  <IconButton {...props} className="button" size="12">
+  <IconButton {...props} className="button" size="8">
     <svg
       viewBox="0 0 1024 1024"
       version="1.1"
@@ -102,6 +102,27 @@ const Reset = (props: any) => (
         d="M816.512 368.192l-55.36 32A285.632 285.632 0 0 1 800 544c0 158.816-129.184 288-288 288-106.368 0-199.264-58.144-249.12-144.16A285.856 285.856 0 0 1 224 544c0-158.816 129.216-288 288-288v96l192-128-192-128v96C317.92 192 160 349.888 160 544c0 64.064 17.504 124 47.52 175.808C268.48 824.96 381.984 896 512 896c194.112 0 352-157.92 352-352 0-64.064-17.472-124-47.488-175.808"
         fill="#181818"
         p-id="3284"
+        sx={{
+          fill: `text`
+        }}
+      ></path>
+    </svg>
+  </IconButton>
+)
+
+const Clear = (props: any) => (
+  <IconButton {...props} className="button" size="8">
+    <svg
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="100%"
+    >
+      <path
+        d="M899.1 869.6l-53-305.6H864c14.4 0 26-11.6 26-26V346c0-14.4-11.6-26-26-26H618V138c0-14.4-11.6-26-26-26H432c-14.4 0-26 11.6-26 26v182H160c-14.4 0-26 11.6-26 26v192c0 14.4 11.6 26 26 26h17.9l-53 305.6c-0.3 1.5-0.4 3-0.4 4.4 0 14.4 11.6 26 26 26h723c1.5 0 3-0.1 4.4-0.4 14.2-2.4 23.7-15.9 21.2-30zM204 390h272V182h72v208h272v104H204V390z m468 440V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H416V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H202.8l45.1-260H776l45.1 260H672z"
+        p-id="8546"
+        fill="#181818"
         sx={{
           fill: `text`
         }}
@@ -218,33 +239,55 @@ export const Masonry = ({ children, itemCount, useStudyMode }: MasonryProps) => 
 
 export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProps) => {
   const [globalStudySwitch, setGlobalStudyMode] = React.useState<boolean>(false)
+  const [historicalSwitch, setHistoricalSwitchMode] = React.useState<boolean>(false)
+
   const [advancedStudySwitch, setAdvancedStudySwitch] = React.useState<boolean>(false)
   const [globalResetSwitch, setGlobalReset] = React.useState<boolean>(false)
   const [globalSuccessCount, setGlobalSuccessCount] = React.useState<number>(0)
   const [globalFailedCount, setGlobalFailedCount] = React.useState<number>(0)
   const [showErrorsOnlySwitch, setShowErrorsOnlySwitch] = React.useState<boolean>(false)
+  const {
+    masonryItemState,
+    markMasonryItem,
+    resetMarkMasonryItem,
+    resetStoragedMarkMasonryItem,
+    historicalMasonryItem
+  } = useMasonryState()
 
-  const [masonryItemState, setMasonryItem] = React.useState<Record<number, boolean>>({})
+  const masonryItems = children
+    .filter((v) => React.isValidElement<MasonryProps>(v))
+    .filter((v) => (v as any).type?.displayName?.indexOf('Masonry') != -1)
+    .filter((v) => v.props.useStudyMode === 'true')
+    .flatMap((v) => v && v.props.children)
+
+  const selectedMasonryItems = React.useMemo(() => {
+    if (!showErrorsOnlySwitch && !historicalSwitch) return masonryItems
+    let result = masonryItems.filter((v) => React.isValidElement<MasonryProps>(v))
+    showErrorsOnlySwitch &&
+      (result = result.filter((v) => masonryItemState[(v as any).props.index] !== true))
+    historicalSwitch &&
+      (result = result.filter((v) => historicalMasonryItem[(v as any).props.index] < 0))
+    return result
+  }, [masonryItems, showErrorsOnlySwitch, historicalSwitch])
+
+  const toogleHistoricalSwitch = () => {
+    setHistoricalSwitchMode(!historicalSwitch)
+  }
 
   const markGlobalFailure = (num: number) => {
     if (masonryItemState[num] === true) {
       addGlobalSuccessCount(-1)
     }
     addGlobalFailedCount()
-    setMasonryItem({
-      ...masonryItemState,
-      [num]: false
-    })
+    markMasonryItem(num, false)
   }
+
   const markGlobalSuccess = (num: number) => {
     if (masonryItemState[num] === false) {
       addGlobalFailedCount(-1)
     }
     addGlobalSuccessCount()
-    setMasonryItem({
-      ...masonryItemState,
-      [num]: true
-    })
+    markMasonryItem(num, true)
   }
 
   const addGlobalSuccessCount = (num: number = 1) => {
@@ -266,7 +309,7 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
     setShowErrorsOnlySwitch(false)
     setGlobalSuccessCount(0)
     setGlobalFailedCount(0)
-    setMasonryItem({})
+    resetMarkMasonryItem()
   }
 
   const context = {
@@ -279,56 +322,92 @@ export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProp
     markGlobalSuccess
   }
 
-  const masonryItems = children
-    .filter((v) => React.isValidElement<MasonryProps>(v))
-    .filter((v) => (v as any).type?.displayName?.indexOf('Masonry') != -1)
-    .filter((v) => v.props.useStudyMode === 'true')
-    .flatMap((v) => v && v.props.children)
-  const selectedMasonryItems = React.useMemo(() => {
-    if (!showErrorsOnlySwitch) return masonryItems
-    return masonryItems
-      .filter((v) => React.isValidElement<MasonryProps>(v))
-      .filter((v) => masonryItemState[(v as any).props.index] !== true)
-  }, [masonryItems, showErrorsOnlySwitch])
-
   return (
     <GlobalStudyContext.Provider value={context}>
       {useStudyMode && (
         <Flex
           sx={{
-            justifyContent: 'space-between',
+            justifyContent: 'start',
             alignItems: 'center',
             py: 2
           }}
         >
-          <Label sx={{ flex: 1, color: `var(--theme-ui-colors-tag-color)` }}>Study Mode</Label>
-          <span sx={{ mr: '1em' }}>
-            <span sx={{ color: `var(--theme-ui-colors-grey-5)` }}>
-              {itemCount - globalSuccessCount - globalFailedCount}
-            </span>
-            {advancedStudySwitch && (
-              <span>
-                <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{globalSuccessCount}</span>
-                <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{globalFailedCount}</span>
-              </span>
-            )}
-          </span>
-          {advancedStudySwitch && (
-            <Label sx={{ width: 'auto' }}>
-              <Checkbox
-                defaultChecked={showErrorsOnlySwitch}
-                onChange={() => setShowErrorsOnlySwitch(!showErrorsOnlySwitch)}
-              />
-            </Label>
-          )}
-          <Label sx={{ width: 'auto' }}>
+          <Label
+            sx={{
+              color: `var(--theme-ui-colors-tag-color)`,
+              width: 'auto',
+              mr: '1em'
+            }}
+          >
+            Study Mode
+          </Label>
+          <Label
+            sx={{
+              width: 'auto',
+              pr: '1em',
+              mr: '1em',
+              borderRight: '1px solid var(--theme-ui-colors-gray-5)'
+            }}
+          >
             <Switch
               sx={{ width: '40px' }}
               checked={globalStudySwitch}
               onChange={() => toogleGlobalStudyMode()}
             />
           </Label>
-          <Reset onClick={resetStudy} />
+          <span sx={{ mr: '1em', width: '8em' }}>
+            {advancedStudySwitch && <span sx={{ mr: '.5em' }}>Score</span>}
+            <span sx={{ color: `var(--theme-ui-colors-grey-5)` }}>
+              {itemCount - globalSuccessCount - globalFailedCount}
+            </span>
+            {advancedStudySwitch && (
+              <span
+                sx={{
+                  pr: '1em',
+                  borderRight: '1px solid var(--theme-ui-colors-gray-5)'
+                }}
+              >
+                <span sx={{ color: `var(--theme-ui-colors-green-5)` }}>-{globalSuccessCount}</span>
+                <span sx={{ color: `var(--theme-ui-colors-red-5)` }}>-{globalFailedCount}</span>
+              </span>
+            )}
+          </span>
+          {advancedStudySwitch && (
+            <div>
+              <Label
+                sx={{
+                  width: 'auto',
+                  pr: '.5em',
+                  mr: '.5em',
+                  borderRight: '1px solid var(--theme-ui-colors-gray-5)'
+                }}
+              >
+                Historical Errors Only
+                <Checkbox
+                  defaultChecked={historicalSwitch}
+                  onChange={() => toogleHistoricalSwitch()}
+                />
+              </Label>
+            </div>
+          )}
+
+          {advancedStudySwitch && (
+            <Label
+              sx={{
+                width: 'auto',
+                mr: '.5em',
+                borderRight: '1px solid var(--theme-ui-colors-gray-5)'
+              }}
+            >
+              Current Errors Only
+              <Checkbox
+                defaultChecked={showErrorsOnlySwitch}
+                onChange={() => setShowErrorsOnlySwitch(!showErrorsOnlySwitch)}
+              />
+            </Label>
+          )}
+          {advancedStudySwitch && <Clear onClick={resetStoragedMarkMasonryItem} />}
+          {advancedStudySwitch && <Reset onClick={resetStudy} />}
         </Flex>
       )}
       {advancedStudySwitch ? (
