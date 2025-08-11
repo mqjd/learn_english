@@ -237,6 +237,25 @@ export const Masonry = ({ children, itemCount, useStudyMode }: MasonryProps) => 
   )
 }
 
+const Divider = () => {
+  return (
+    <span
+      sx={{
+        display: 'inline-block',
+        width: '1em'
+      }}
+    >
+      <span
+        sx={{
+          display: 'inline-block',
+          width: '0.5em',
+          borderRight: '1px solid var(--theme-ui-colors-gray-5)'
+        }}
+      ></span>
+    </span>
+  )
+}
+
 export const GlobalMasonry = ({ children, itemCount, useStudyMode }: MasonryProps) => {
   const [globalStudySwitch, setGlobalStudyMode] = React.useState<boolean>(false)
   const [historicalSwitch, setHistoricalSwitchMode] = React.useState<boolean>(false)

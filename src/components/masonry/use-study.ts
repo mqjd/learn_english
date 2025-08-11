@@ -34,11 +34,27 @@ type MasonryState = {
   resetStoragedMarkMasonryItem: () => void
 }
 
+const safeLocalStorage = {
+  getItem: (key: string) => {
+    if (typeof window === 'undefined') return null
+    return localStorage.getItem(key)
+  },
+  removeItem: (key: string) => {
+    if (typeof window === 'undefined') return null
+    return localStorage.removeItem(key)
+  },
+  setItem: (key: string, value: string) => {
+    if (typeof window === 'undefined') return
+    localStorage.setItem(key, value)
+  }
+}
+
 export const useMasonryState = (): MasonryState => {
-  const vocabularyExaminationKey = window.location.pathname + '-vocabulary'
+  const vocabularyExaminationKey =
+    typeof window !== 'undefined' ? window.location.pathname : '' + '-vocabulary'
 
   const getVocabularyExamination = () => {
-    const vocabularyExaminationStr = localStorage.getItem(vocabularyExaminationKey) || '{}'
+    const vocabularyExaminationStr = safeLocalStorage.getItem(vocabularyExaminationKey) || '{}'
     const vocabularyExamination = JSON.parse(vocabularyExaminationStr)
     return vocabularyExamination
   }
@@ -58,20 +74,20 @@ export const useMasonryState = (): MasonryState => {
       [num]: value
     })
     if (!value) {
-      const vocabularyExaminationStr = localStorage.getItem(vocabularyExaminationKey) || '{}'
+      const vocabularyExaminationStr = safeLocalStorage.getItem(vocabularyExaminationKey) || '{}'
       const vocabularyExamination = JSON.parse(vocabularyExaminationStr)
       const newVocabularyExamination = {
         ...vocabularyExamination,
         [num]: vocabularyExamination[num] || 0 - 1
       }
 
-      localStorage.setItem(vocabularyExaminationKey, JSON.stringify(newVocabularyExamination))
+      safeLocalStorage.setItem(vocabularyExaminationKey, JSON.stringify(newVocabularyExamination))
       setHistoricalMasonryItem(newVocabularyExamination)
     }
   }
 
   const resetStoragedMarkMasonryItem = () => {
-    localStorage.removeItem(vocabularyExaminationKey)
+    safeLocalStorage.removeItem(vocabularyExaminationKey)
     setHistoricalMasonryItem({})
   }
 
