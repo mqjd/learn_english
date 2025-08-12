@@ -51,7 +51,7 @@ const safeLocalStorage = {
 
 export const useMasonryState = (): MasonryState => {
   const vocabularyExaminationKey =
-    typeof window !== 'undefined' ? window.location.pathname : '' + '-vocabulary'
+    typeof window !== 'undefined' ? window.location.pathname + '-vocabulary' : ''
 
   const getVocabularyExamination = () => {
     const vocabularyExaminationStr = safeLocalStorage.getItem(vocabularyExaminationKey) || '{}'
