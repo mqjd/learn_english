@@ -18,6 +18,10 @@ const options = {
       title: `About`,
       slug: `/about`,
     },
+    {
+      title: `Tags`,
+      slug: `/tags`,
+    },
   ],
   externalLinks: [
     {
