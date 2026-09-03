@@ -16,7 +16,6 @@ npm run build
 # bash ./optimize.sh
 
 cd public
-echo "mqjd.xyz" > CNAME
 git init
 git checkout --orphan pages
 git add -A
