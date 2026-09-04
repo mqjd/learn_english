@@ -62,3 +62,19 @@
 .button:hover {
   background-color: var(--theme-ui-colors-gray-5);
 }
+
+.masonry-item-mark .cry {
+  display: none;
+}
+
+.masonry-item-mark .smile {
+  display: block;
+}
+
+.masonry-item-mark:hover .cry {
+  display: block;
+}
+
+.masonry-item-mark:hover .smile {
+  display: none;
+}
