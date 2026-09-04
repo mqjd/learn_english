@@ -1,5 +1,4 @@
 import rehypeMetaAsAttributes from '@lekoarts/rehype-meta-as-attributes';
-import 'dotenv/config';
 import path from 'path';
 import remarkGfm from 'remark-gfm';
 import { fileURLToPath } from 'url';
@@ -47,13 +46,9 @@ const config = {
     },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-react-helmet`,
     'gatsby-plugin-emotion',
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-theme-ui`,
-    {
-      resolve: 'gatsby-plugin-compile-es6-packages',
-    },
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
