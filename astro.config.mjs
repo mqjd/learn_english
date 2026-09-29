@@ -5,25 +5,36 @@ import remarkBaseImages from './src/plugins/base-images/index.js';
 import remarkMasonry from './src/plugins/masonry/index.js';
 import starlightThemeBlog from './src/theme/index.ts';
 
-const base = '/learn_english/';
+/** @type {import('astro').AstroIntegration} */
+const markdownIntegration = {
+  name: 'learn-english-markdown',
+  hooks: {
+    'astro:config:setup': ({ config, updateConfig }) => {
+      updateConfig({
+        markdown: {
+          ...config.markdown,
+          processor: unified({
+            gfm: true,
+            remarkPlugins: [
+              [remarkBaseImages, { base: config.base }],
+              [
+                remarkMasonry,
+                { importSource: 'virtual:starlight-theme-blog/masonry' },
+              ],
+            ],
+          }),
+        },
+      });
+    },
+  },
+};
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mqjd.github.io',
-  base,
-  markdown: {
-    processor: unified({
-      gfm: true,
-      remarkPlugins: [
-        [remarkBaseImages, { base }],
-        [
-          remarkMasonry,
-          { importSource: 'virtual:starlight-theme-blog/masonry' },
-        ],
-      ],
-    }),
-  },
+  base: '/learn_english/',
   integrations: [
+    markdownIntegration,
     starlightThemeBlog({
       title: 'MQJD',
       favicon: '/favicon.ico',
@@ -38,7 +49,7 @@ export default defineConfig({
         { label: 'Media', dirName: 'medias' },
         { label: 'Tags', href: '/tags/' },
       ],
-      accentColor: '#0d9488',
+      accentColor: '#3f51b5',
     }),
   ],
 });

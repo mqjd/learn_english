@@ -1,7 +1,8 @@
 /** Add Astro's configured base path to an internal absolute path. */
 export function withBasePath(pathname: string, base: string): string {
 	const path = pathname.startsWith('/') ? pathname : `/${pathname}`;
-	const basePrefix = base === '/' ? '' : `/${base.replace(/^\/+|\/+$/g, '')}`;
+	const normalizedBase = base.replace(/^\/+|\/+$/g, '');
+	const basePrefix = normalizedBase ? `/${normalizedBase}` : '';
 
 	if (!basePrefix || path === basePrefix || path.startsWith(`${basePrefix}/`)) return path;
 	return `${basePrefix}${path}`;
