@@ -6,7 +6,7 @@ import starlightThemeBlog from './src/theme/index.ts';
 
 // https://astro.build/config
 export default defineConfig({
-  base: '/learn-english/',
+  base: '/learn_english/',
   markdown: {
     processor: unified({
       gfm: true,
