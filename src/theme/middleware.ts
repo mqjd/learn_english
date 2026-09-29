@@ -7,6 +7,7 @@ import {
 	type SidebarEntryLike,
 } from './directory-index';
 import type { ThemeNavLink } from './options';
+import { stripBasePath, withBasePath } from './paths';
 
 type SidebarEntry = SidebarEntryLike;
 
@@ -17,7 +18,8 @@ type SidebarEntry = SidebarEntryLike;
 export const onRequest = defineRouteMiddleware(async (context) => {
 	context.locals.theme = themeConfig;
 
-	const pathname = context.url.pathname;
+	const base = import.meta.env.BASE_URL;
+	const pathname = stripBasePath(context.url.pathname, base);
 	const fullSidebar = context.locals.starlightRoute.sidebar as SidebarEntry[];
 	const navs = themeConfig.navs;
 
@@ -26,7 +28,7 @@ export const onRequest = defineRouteMiddleware(async (context) => {
 		return {
 			label: nav.label,
 			dirName: nav.dirName,
-			href: `/${nav.dirName}/`,
+			href: withBasePath(`/${nav.dirName}/`, base),
 			active: isPathUnderDir(pathname, nav.dirName),
 		};
 	});
@@ -36,7 +38,7 @@ export const onRequest = defineRouteMiddleware(async (context) => {
 	const sectionDir = topLevelDir(pathname);
 	if (!sectionDir) return;
 
-	const group = findSectionGroupByDir(fullSidebar, sectionDir);
+	const group = findSectionGroupByDir(fullSidebar, sectionDir, base);
 	if (!group?.entries) return;
 
 	const categoryEntries = await getCollection('docsCategories');
@@ -56,12 +58,16 @@ function isPathUnderDir(pathname: string, dirName: string): boolean {
 	return pathname === prefix || pathname === `${prefix}/` || pathname.startsWith(`${prefix}/`);
 }
 
-function findSectionGroupByDir(sidebar: SidebarEntry[], dirName: string): SidebarEntry | undefined {
+function findSectionGroupByDir(
+	sidebar: SidebarEntry[],
+	dirName: string,
+	base: string,
+): SidebarEntry | undefined {
 	// Prefer a top-level group whose first link lives under dirName (collection tree).
 	const byHref = sidebar.find((entry) => {
 		if (entry.type !== 'group') return false;
 		const href = firstLinkHref(entry);
-		return href ? isPathUnderDir(href, dirName) : false;
+		return href ? isPathUnderDir(stripBasePath(href, base), dirName) : false;
 	});
 	if (byHref) return byHref;
 

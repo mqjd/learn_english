@@ -8,15 +8,17 @@ import {
 	getDirectoryChildren,
 	titleForDirectory,
 } from '../directory-index';
+import { stripBasePath } from '../paths';
 
-const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const base = import.meta.env.BASE_URL;
+const pathname = stripBasePath(Astro.url.pathname, base).replace(/\/+$/, '') || '/';
 const dirId = pathname.replace(/^\//, '');
 const [docs, categoryEntries] = await Promise.all([
 	getCollection('docs'),
 	getCollection('docsCategories'),
 ]);
 const categories = categoryMapFromCollection(categoryEntries);
-const children = getDirectoryChildren(dirId, docs, categories);
+const children = getDirectoryChildren(dirId, docs, categories, base);
 const title = titleForDirectory(dirId, themeConfig.navs, categories);
 ---
 

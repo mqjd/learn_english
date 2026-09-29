@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { withBasePath } from './paths';
 
 const DOC_INDEX_RE = /^index\.(md|mdx|mdoc|markdown|mdown|mkdn|mkd|mdwn)$/i;
 const DOC_FILE_RE = /\.(md|mdx|mdoc|markdown|mdown|mkdn|mkd|mdwn)$/i;
@@ -33,11 +34,11 @@ type CategoryLike = {
 type SortableChild = DirectoryChild & { name: string };
 
 /** Collection id → URL path (`medias/the-intern` → `/medias/the-intern/`). */
-export function docIdToHref(id: string): string {
+export function docIdToHref(id: string, base = '/'): string {
 	let slug = id.replace(/\\/g, '/');
 	if (slug.endsWith('/index')) slug = slug.slice(0, -'/index'.length);
 	else if (slug === 'index') slug = '';
-	return slug ? `/${slug}/` : '/';
+	return withBasePath(slug ? `/${slug}/` : '/', base);
 }
 
 /** `peppa-pig` → `Peppa Pig`; `s1-e01-e10` → `S1 E01 E10`. */
@@ -148,6 +149,7 @@ export function getDirectoryChildren(
 	dirId: string,
 	docs: DocLike[],
 	categories: CategoryMap = new Map(),
+	base = '/',
 ): DirectoryChild[] {
 	const prefix = dirId ? `${dirId}/` : '';
 	const pages: SortableChild[] = [];
@@ -171,7 +173,7 @@ export function getDirectoryChildren(
 				type: 'page',
 				name: segments[0],
 				label: entry.data.title ?? segments[0],
-				href: docIdToHref(id),
+				href: docIdToHref(id, base),
 			});
 			continue;
 		}
@@ -196,7 +198,7 @@ export function getDirectoryChildren(
 				type: 'page',
 				name,
 				label: meta.indexTitle ?? category.label ?? name,
-				href: docIdToHref(`${childId}/index`),
+				href: docIdToHref(`${childId}/index`, base),
 				position: category.position,
 			});
 		} else {
@@ -204,7 +206,7 @@ export function getDirectoryChildren(
 				type: 'dir',
 				name,
 				label: category.label ?? name,
-				href: `/${childId}/`,
+				href: withBasePath(`/${childId}/`, base),
 				position: category.position,
 			});
 		}

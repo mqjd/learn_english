@@ -4,9 +4,12 @@ import { unified } from '@astrojs/markdown-remark';
 import remarkMasonry from './src/plugins/masonry/index.js';
 import starlightThemeBlog from './src/theme/index.ts';
 
+const base = '/learn_english/';
+
 // https://astro.build/config
 export default defineConfig({
-  base: '/learn_english/',
+  site: 'https://mqjd.github.io',
+  base,
   markdown: {
     processor: unified({
       gfm: true,
