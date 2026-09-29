@@ -13,7 +13,7 @@ pnpm install --frozen-lockfile
 # 部署github
 pnpm run build
 
-cd public
+cd dist
 git init
 git checkout --orphan pages
 git add -A
