@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
+import remarkBaseImages from './src/plugins/base-images/index.js';
 import remarkMasonry from './src/plugins/masonry/index.js';
 import starlightThemeBlog from './src/theme/index.ts';
 
@@ -14,6 +15,7 @@ export default defineConfig({
     processor: unified({
       gfm: true,
       remarkPlugins: [
+        [remarkBaseImages, { base }],
         [
           remarkMasonry,
           { importSource: 'virtual:starlight-theme-blog/masonry' },
@@ -34,6 +36,7 @@ export default defineConfig({
         { label: 'Listening', dirName: 'listening' },
         { label: 'Exercise', dirName: 'exercise' },
         { label: 'Media', dirName: 'medias' },
+        { label: 'Tags', href: '/tags/' },
       ],
       accentColor: '#0d9488',
     }),

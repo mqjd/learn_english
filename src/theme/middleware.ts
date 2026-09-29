@@ -24,12 +24,20 @@ export const onRequest = defineRouteMiddleware(async (context) => {
 	const navs = themeConfig.navs;
 
 	const themeNavs: ThemeNavLink[] = navs.map((nav) => {
-		// Prefer the section root (directory index or docs index) over the first page.
+		if (nav.dirName) {
+			// Prefer the section root (directory index or docs index) over the first page.
+			return {
+				label: nav.label,
+				href: withBasePath(`/${nav.dirName}/`, base),
+				active: isPathUnderDir(pathname, nav.dirName),
+			};
+		}
+
+		const href = withBasePath(nav.href, base);
 		return {
 			label: nav.label,
-			dirName: nav.dirName,
-			href: withBasePath(`/${nav.dirName}/`, base),
-			active: isPathUnderDir(pathname, nav.dirName),
+			href,
+			active: isPathAtOrUnder(pathname, stripBasePath(href, base)),
 		};
 	});
 
@@ -56,6 +64,11 @@ function topLevelDir(pathname: string): string | undefined {
 function isPathUnderDir(pathname: string, dirName: string): boolean {
 	const prefix = `/${dirName}`;
 	return pathname === prefix || pathname === `${prefix}/` || pathname.startsWith(`${prefix}/`);
+}
+
+function isPathAtOrUnder(pathname: string, route: string): boolean {
+	const prefix = route.replace(/\/+$/, '') || '/';
+	return pathname === prefix || pathname.startsWith(`${prefix}/`);
 }
 
 function findSectionGroupByDir(

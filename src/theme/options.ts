@@ -1,12 +1,21 @@
 import { DEFAULT_DOCS_DIR } from './loader';
 
-/** Top-nav section mapped to a docs subdirectory (Docusaurus-style). */
-export interface NavItem {
-	/** Display label in the header nav. */
-	label: string;
-	/** Docs subdirectory name; also used as the URL slug prefix. */
-	dirName: string;
-}
+/** Top-nav item mapped to a docs subdirectory or an explicit internal route. */
+export type NavItem =
+	| {
+			/** Display label in the header nav. */
+			label: string;
+			/** Docs subdirectory name; also used as the URL slug prefix. */
+			dirName: string;
+			href?: never;
+	  }
+	| {
+			/** Display label in the header nav. */
+			label: string;
+			/** Explicit internal route, such as `/tags/`. */
+			href: string;
+			dirName?: never;
+	  };
 
 export interface ThemeUserConfig {
 	/** Accent color used for links and highlights (CSS color). */
@@ -44,7 +53,6 @@ export interface ThemeConfig {
 /** Resolved nav entry exposed to Header via `Astro.locals.themeNavs`. */
 export interface ThemeNavLink {
 	label: string;
-	dirName: string;
 	href: string;
 	active: boolean;
 }

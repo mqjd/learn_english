@@ -77,7 +77,7 @@ export function getCategoryMeta(categories: CategoryMap, dirId: string): Categor
 /** Label for a directory: `_category_.json` → navs (top-level) → raw folder name. */
 export function titleForDirectory(
 	dirId: string,
-	navs: { label: string; dirName: string }[] = [],
+	navs: { label: string; dirName?: string }[] = [],
 	categories: CategoryMap = new Map(),
 ): string {
 	const categoryLabel = getCategoryMeta(categories, dirId).label;

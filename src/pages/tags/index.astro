@@ -1,0 +1,46 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import { getTagArchives } from '../../theme/tags';
+import { withBasePath } from '../../theme/paths';
+
+const base = import.meta.env.BASE_URL;
+const tags = getTagArchives(await getCollection('docs'), base);
+---
+
+<StarlightPage frontmatter={{ title: 'Tags', template: 'splash', editUrl: false, prev: false, next: false }}>
+	{tags.length > 0 ? (
+		<ul class="tag-list">
+			{tags.map((tag) => (
+				<li>
+					<a href={withBasePath(`/tags/${tag.slug}/`, base)}>{tag.name}</a>
+					<span>{tag.count}</span>
+				</li>
+			))}
+		</ul>
+	) : (
+		<p>No tags yet.</p>
+	)}
+</StarlightPage>
+
+<style>
+	.tag-list {
+		margin: 1.5rem 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.tag-list li {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 0.65rem;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.tag-list li > span {
+		color: var(--sl-color-gray-3);
+		font-variant-numeric: tabular-nums;
+	}
+</style>

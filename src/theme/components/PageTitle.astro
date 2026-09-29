@@ -1,0 +1,48 @@
+---
+import DefaultPageTitle from '@astrojs/starlight/components/PageTitle.astro';
+import { tagSlug } from '../tags';
+import { withBasePath } from '../paths';
+
+const data = Astro.locals.starlightRoute.entry.data;
+const date = data.date;
+const tags = (data.tags ?? []).map((name) => name.trim()).filter((name) => tagSlug(name));
+const base = import.meta.env.BASE_URL;
+---
+
+<DefaultPageTitle />
+{
+	(date || tags.length > 0) && (
+		<p class="page-metadata">
+			{date && <time datetime={date.toISOString()}>{date.toISOString().slice(0, 10)}</time>}
+			{date && tags.length > 0 && <span class="separator" aria-hidden="true"> — </span>}
+			{tags.map((tag) => (
+				<a href={withBasePath(`/tags/${tagSlug(tag)}/`, base)}>{tag}</a>
+			))}
+		</p>
+	)
+}
+
+<style>
+	.page-metadata {
+		margin-block: 1.5rem 2rem;
+		color: var(--sl-color-gray-2);
+		font-size: 1.25em;
+		line-height: 1.5;
+	}
+
+	.page-metadata a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.page-metadata a + a::before {
+		content: ', ';
+		white-space: pre;
+		color: var(--sl-color-gray-2);
+		text-decoration: none;
+	}
+
+	.page-metadata a:hover {
+		color: var(--sl-color-text-accent);
+	}
+</style>

@@ -98,6 +98,7 @@ function themePlugin(options: ThemeConfig): StarlightPlugin {
 					customCss: [themeCss, ...(config.customCss ?? [])],
 					components: {
 						Header: `${componentsDir}/Header.astro`,
+						PageTitle: `${componentsDir}/PageTitle.astro`,
 						Footer: `${componentsDir}/Footer.astro`,
 						Sidebar: `${componentsDir}/Sidebar.astro`,
 						Hero: `${componentsDir}/Hero.astro`,

@@ -1,0 +1,76 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import { getTagArchives } from '../../theme/tags';
+import { withBasePath } from '../../theme/paths';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+	const tags = getTagArchives(await getCollection('docs'), import.meta.env.BASE_URL);
+	return tags.map((tag) => ({ params: { tag: tag.slug }, props: { tag } }));
+}
+
+const { tag } = Astro.props;
+---
+
+<StarlightPage frontmatter={{ title: tag.name, template: 'splash', editUrl: false, prev: false, next: false }}>
+	<p class="tag-summary">
+		<a href={withBasePath('/tags/', base)}>All tags</a>
+		<span aria-hidden="true"> · </span>
+		{tag.count} {tag.count === 1 ? 'document' : 'documents'}
+	</p>
+	<ul class="document-list">
+		{tag.documents.map((document) => (
+			<li>
+				<a href={document.href}>{document.title}</a>
+				{document.date && (
+					<time datetime={document.date.toISOString()}>
+						{document.date.toISOString().slice(0, 10)}
+					</time>
+				)}
+			</li>
+		))}
+	</ul>
+</StarlightPage>
+
+<style>
+	.tag-summary {
+		margin-block: 1.5rem;
+		color: var(--sl-color-gray-2);
+	}
+
+	.document-list {
+		margin: 1.5rem 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.document-list li {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block: 0.75rem;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.document-list li > a {
+		font-weight: 600;
+	}
+
+	.document-list time {
+		flex: 0 0 auto;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-sm);
+		font-variant-numeric: tabular-nums;
+	}
+
+	@media (max-width: 35rem) {
+		.document-list li {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+	}
+</style>
