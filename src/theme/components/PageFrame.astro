@@ -1,0 +1,20 @@
+---
+import Default from '@astrojs/starlight/components/PageFrame.astro';
+
+const { accentColor, fontFamily } = Astro.locals.theme;
+---
+
+<style is:inline set:html={`
+:root {
+	--sl-theme-accent: ${accentColor};
+	--sl-theme-font: ${fontFamily};
+}
+`} />
+
+<div class="sl-theme-blog">
+	<Default>
+		<slot />
+		<slot name="header" slot="header" />
+		<slot name="sidebar" slot="sidebar" />
+	</Default>
+</div>

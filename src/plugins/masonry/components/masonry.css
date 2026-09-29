@@ -1,0 +1,399 @@
+:root {
+	--masonry-shadow: rgba(0, 0, 0, 0.12);
+	--masonry-border: var(--sl-color-gray-5, #888);
+	--masonry-muted: var(--sl-color-gray-5, #888);
+	--masonry-bg: var(--sl-color-bg, #fff);
+	--masonry-success: var(--sl-color-green-high, #009688);
+	--masonry-failure: var(--sl-color-red-high, #f44336);
+	--masonry-text: var(--sl-color-text, inherit);
+	--masonry-tag: var(--sl-color-accent-high, var(--masonry-text));
+}
+
+.masonry-container {
+	width: 100%;
+	margin: .8em auto;
+}
+
+.masonry-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+	grid-gap: 20px;
+	grid-auto-rows: 10px;
+	/* Avoid flash: items collapse to 10px rows until JS sets grid-row-end spans */
+	opacity: 0;
+}
+
+.masonry-grid.is-ready {
+	opacity: 1;
+}
+
+@media (scripting: none) {
+	.masonry-grid {
+		opacity: 1;
+	}
+}
+
+.masonry-item {
+	position: relative;
+	align-self: start;
+	height: max-content;
+	margin-top: 0;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 0 10px 5px var(--masonry-shadow);
+	transition: all 0.3s ease;
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	color: var(--masonry-text);
+}
+
+.masonry-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 16px var(--masonry-shadow);
+}
+
+.masonry-item-title {
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 10px;
+	padding-right: 1.25em;
+	border-bottom: 1px solid var(--masonry-border);
+	font-size: 1.5em;
+	font-weight: bold;
+	color: var(--masonry-text);
+	flex-shrink: 0;
+	line-height: 1.3;
+}
+
+.masonry-item-title.is-success {
+	color: var(--masonry-success);
+}
+
+.masonry-item-title.is-failure {
+	color: var(--masonry-failure);
+}
+
+.masonry-item-content {
+	margin: 0;
+	flex-shrink: 0;
+	position: relative;
+	color: var(--masonry-text);
+}
+
+/* Avoid Starlight/markdown default margins inflating card height */
+.masonry-item-content > :first-child {
+	margin-top: 0;
+}
+
+.masonry-item-content > :last-child {
+	margin-bottom: 0;
+}
+
+.masonry-item-content p {
+	margin-block: 0.35em;
+}
+
+.masonry-item-content p:first-child {
+	margin-top: 0;
+}
+
+.masonry-item-content p:last-child {
+	margin-bottom: 0;
+}
+
+.masonry-item img {
+	width: 100%;
+	display: block;
+}
+
+.masonry-item-skeleton {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--masonry-bg);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+	z-index: 1;
+}
+
+.masonry-item-skeleton[hidden],
+.masonry-item-mark[hidden],
+.masonry-toolbar [hidden] {
+	display: none !important;
+}
+
+.masonry-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	column-gap: 0;
+	row-gap: 0.5em;
+	padding: 0.5em 0;
+	line-height: 1.25;
+}
+
+.masonry-toolbar > * {
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+	align-self: center;
+	box-sizing: border-box;
+	min-height: 2rem;
+	margin-block: 0;
+	line-height: 1.25;
+	vertical-align: middle;
+}
+
+.masonry-toolbar-label {
+	color: var(--masonry-tag);
+	width: auto;
+	margin-right: 1em;
+	font-weight: 500;
+}
+
+.masonry-switch-wrap {
+	position: relative;
+	width: auto;
+	padding-right: 1em;
+	margin-right: 1em;
+	cursor: pointer;
+}
+
+.masonry-toolbar-divider {
+	border-right: 1px solid var(--masonry-muted);
+}
+
+.masonry-switch-input {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+}
+
+.masonry-switch {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 22px;
+	border-radius: 999px;
+	background: #1a1a2e;
+	transition: background 0.2s ease;
+	flex-shrink: 0;
+}
+
+.masonry-switch::after {
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+	transition: transform 0.2s ease;
+}
+
+.masonry-switch-input:checked + .masonry-switch {
+	background: var(--sl-color-accent-high, #6c5ce7);
+}
+
+.masonry-switch-input:checked + .masonry-switch::after {
+	transform: translateX(18px);
+}
+
+.masonry-switch-input:focus-visible + .masonry-switch {
+	outline: 2px solid var(--sl-color-accent-high, #6c5ce7);
+	outline-offset: 2px;
+}
+
+.masonry-toolbar-score {
+	margin-right: 1em;
+	min-width: 2em;
+}
+
+.masonry-toolbar-score-label {
+	margin-right: 0.5em;
+}
+
+.masonry-toolbar-score-detail {
+	display: inline-flex;
+	align-items: center;
+	padding-right: 1em;
+	border-right: 1px solid var(--masonry-muted);
+}
+
+.masonry-toolbar-remaining {
+	color: var(--masonry-text);
+}
+
+.masonry-toolbar-success {
+	color: var(--masonry-success);
+}
+
+.masonry-toolbar-failed {
+	color: var(--masonry-failure);
+}
+
+.masonry-toolbar-check {
+	gap: 0.35em;
+	width: auto;
+	padding-right: 0.5em;
+	margin-right: 0.5em;
+	cursor: pointer;
+	user-select: none;
+}
+
+.masonry-toolbar-check input {
+	appearance: auto;
+	width: 1rem;
+	height: 1rem;
+	margin: 0;
+	flex-shrink: 0;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+/* Scope .button under masonry roots — lucode header also uses .button */
+[data-masonry-root] .button {
+	cursor: pointer;
+	border-radius: 10%;
+	color: var(--masonry-text);
+	transition: background-color 0.15s ease;
+}
+
+[data-masonry-root] .button svg {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+[data-masonry-root] .button-right path {
+	fill: #009688;
+}
+
+[data-masonry-root] .button-wrong path,
+[data-masonry-root] .button-cry path {
+	fill: #f44336;
+}
+
+[data-masonry-root] .button-smile path {
+	fill: var(--masonry-success);
+}
+
+[data-masonry-root] .button-reset path,
+[data-masonry-root] .button-clear path {
+	fill: var(--masonry-text);
+}
+
+.masonry-toolbar .button {
+	box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+	width: 2rem;
+	height: 2rem;
+	min-width: 2rem;
+	min-height: 2rem;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 0;
+	font-size: 0;
+	flex-shrink: 0;
+}
+
+.masonry-toolbar .button svg {
+	width: 1.25rem;
+	height: 1.25rem;
+	display: block;
+	flex-shrink: 0;
+}
+
+/* Icon size = title font-size; pinned to title's far right */
+.masonry-item-mark .button {
+	box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+	width: 1em;
+	height: 1em;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: inherit;
+	line-height: 0;
+	z-index: 2;
+}
+
+.masonry-item-mark .button svg {
+	width: 1em;
+	height: 1em;
+	display: block;
+}
+
+.masonry-item-mark .cry {
+	display: none;
+}
+
+.masonry-item-mark .smile {
+	display: flex;
+}
+
+.masonry-item-mark:hover .cry {
+	display: flex;
+}
+
+.masonry-item-mark:hover .smile {
+	display: none;
+}
+
+/* Match original Wrong/Right IconButton size="12" (Tailwind 12 = 3rem) */
+.masonry-item-skeleton .button {
+	box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+	width: 3rem;
+	height: 3rem;
+	min-width: 3rem;
+	min-height: 3rem;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	align-self: center;
+	flex: 0 0 3rem;
+	line-height: 0;
+	font-size: 0;
+}
+
+.masonry-item-skeleton .button svg {
+	width: 3rem;
+	height: 3rem;
+	display: block;
+	flex-shrink: 0;
+}
+
+/* After transparent backgrounds so hover is visible (same as original gray-5) */
+[data-masonry-root] .button:hover {
+	background-color: var(--sl-color-gray-5, #94a3b8);
+}

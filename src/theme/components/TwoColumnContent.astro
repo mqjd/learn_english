@@ -1,0 +1,184 @@
+---
+/**
+ * Floating TOC control: centered icon on the right; expands on hover.
+ * Visibility is controlled via `<theme-toc-fab>.setVisible()` (see toc-fab.js).
+ */
+---
+
+<div class="lg:sl-flex toc-layout">
+	{
+		Astro.locals.starlightRoute.toc && (
+			<aside class="right-sidebar-container print:hidden toc-rail-container">
+				<theme-toc-fab class="right-sidebar toc-rail">
+					<span class="toc-fab-icon" aria-hidden="true">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="18"
+							height="18"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						>
+							<line x1="8" x2="21" y1="6" y2="6"></line>
+							<line x1="8" x2="21" y1="12" y2="12"></line>
+							<line x1="8" x2="21" y1="18" y2="18"></line>
+							<line x1="3" x2="3.01" y1="6" y2="6"></line>
+							<line x1="3" x2="3.01" y1="12" y2="12"></line>
+							<line x1="3" x2="3.01" y1="18" y2="18"></line>
+						</svg>
+					</span>
+					<div class="toc-fab-panel">
+						<slot name="right-sidebar" />
+					</div>
+				</theme-toc-fab>
+			</aside>
+		)
+	}
+	<div class="main-pane"><slot /></div>
+</div>
+
+<script>
+	class ThemeTocFab extends HTMLElement {
+		/** @param {boolean} visible */
+		setVisible(visible) {
+			this.hidden = !visible
+		}
+	}
+
+	if (!customElements.get('theme-toc-fab')) {
+		customElements.define('theme-toc-fab', ThemeTocFab)
+	}
+</script>
+
+<style>
+	@layer black {
+		.main-pane {
+			isolation: isolate;
+			/* Horizontal/vertical padding comes from .content-panel */
+			padding: 1em;
+		}
+
+		.toc-fab-icon {
+			display: none;
+		}
+
+		@media (min-width: 72rem) {
+			:global([data-has-toc]) {
+				--sl-toc-fab-size: 2.75rem;
+			}
+
+			/* Reclaim former right TOC column for the reading width */
+			:global([data-has-sidebar][data-has-toc]) {
+				--sl-content-width: calc(45rem + var(--sl-sidebar-width));
+			}
+
+			/* Override theme-black’s fixed TOC column */
+			.toc-rail-container.right-sidebar-container {
+				order: 2;
+				position: relative;
+				display: block;
+				width: 0;
+				flex-shrink: 0;
+				padding-inline: 0;
+			}
+
+			theme-toc-fab.toc-rail.right-sidebar {
+				display: block;
+				position: fixed;
+				top: 50%;
+				inset-inline-end: 1rem;
+				translate: 0 -50%;
+				border: none;
+				padding: 0;
+				width: var(--sl-toc-fab-size);
+				height: var(--sl-toc-fab-size);
+				overflow: hidden;
+				scrollbar-width: none;
+				background-color: var(--background, var(--sl-color-bg));
+				border-radius: 999px;
+				box-shadow:
+					0 0 0 1px var(--border, var(--sl-color-hairline)),
+					0 4px 16px color-mix(in srgb, var(--sl-color-black, #000) 14%, transparent);
+				transition:
+					width 0.2s ease,
+					height 0.2s ease,
+					border-radius 0.2s ease,
+					box-shadow 0.2s ease,
+					background-color 0.2s ease;
+				z-index: 20;
+			}
+
+			theme-toc-fab.toc-rail.right-sidebar[hidden] {
+				display: none;
+			}
+
+			.toc-fab-icon {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: absolute;
+				inset: 0;
+				width: var(--sl-toc-fab-size);
+				height: var(--sl-toc-fab-size);
+				color: var(--foreground, var(--sl-color-text));
+				pointer-events: none;
+				z-index: 2;
+				opacity: 1;
+			}
+
+			.toc-fab-panel {
+				position: absolute;
+				inset: 0;
+				opacity: 0;
+				visibility: hidden;
+				pointer-events: none;
+				overflow: auto;
+			}
+
+			/* Only hover expands — avoid :focus-within (TOC links can steal focus on load) */
+			theme-toc-fab.toc-rail.right-sidebar:hover {
+				width: min(18rem, var(--sl-sidebar-width, 18rem));
+				height: min(70vh, calc(100vh - var(--sl-nav-height) - 1.5rem));
+				border-radius: 0.75rem;
+				box-shadow:
+					0 0 0 1px var(--border, var(--sl-color-hairline)),
+					0 12px 32px color-mix(in srgb, var(--sl-color-black, #000) 18%, transparent);
+			}
+
+			theme-toc-fab.toc-rail.right-sidebar:hover .toc-fab-icon {
+				opacity: 0;
+			}
+
+			theme-toc-fab.toc-rail.right-sidebar:hover .toc-fab-panel {
+				opacity: 1;
+				visibility: visible;
+				pointer-events: auto;
+			}
+
+			.toc-fab-panel :global(.right-sidebar-panel) {
+				display: block;
+				padding: 0.75rem 1rem;
+			}
+
+			/* Hide mobile TOC wrapper inside the desktop FAB panel */
+			.toc-fab-panel :global(mobile-starlight-toc),
+			.toc-fab-panel :global([class~='lg:sl-hidden']) {
+				display: none !important;
+			}
+
+			.main-pane {
+				width: 100%;
+			}
+
+			:global([data-has-sidebar][data-has-toc]) .main-pane {
+				--sl-content-margin-inline: 0;
+				order: 1;
+				width: 100%;
+				max-width: none;
+			}
+		}
+	}
+</style>

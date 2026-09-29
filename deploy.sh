@@ -8,12 +8,10 @@ git config --global user.email "1378415278@qq.com"
 
 githubUrl=https://mqjd:${GITHUB_TOKEN}@github.com/mqjd/learn_english.git
 
-npm install --legacy-peer-deps
+pnpm install --frozen-lockfile
 
 # 部署github
-npm run build
-
-# bash ./optimize.sh
+pnpm run build
 
 cd public
 git init

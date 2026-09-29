@@ -1,155 +1,50 @@
-<p align="center">
-  <a href="https://mqjd.github.io/learn_english">
-    <img alt="MQ's English Learning" src="./static/favicon.ico" width="100" />
-  </a>
-</p>
-<h1 align="center">
-  MQ's English Learning Blog
-</h1>
+# Starlight Starter Kit: Basics
 
-<p align="center">
-  A comprehensive English learning platform built with Gatsby, featuring interactive content, vocabulary building, and structured learning paths.
-</p>
+[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-## 📚 Project Overview
-
-This is a personal English learning blog that serves as both a learning resource and a demonstration of modern web development practices. The blog contains structured English learning content including:
-
-- **Listening Practice**: A1 level listening exercises with vocabulary and comprehension
-- **Reading Materials**: Harry Potter chapters, Andersen fairy tales, and other literature
-- **Visual Learning**: Peppa Pig episodes with vocabulary and phrase analysis
-- **Practical Exercises**: 4-word sentence construction exercises
-- **Useful Sentences**: Common English phrases and expressions
-
-## 🚀 Features
-
-- **Interactive Learning**: Masonry-style vocabulary cards with study mode
-- **Multi-level Content**: From A1 beginner to advanced materials
-- **Rich Media**: Images, videos, and interactive elements
-- **Responsive Design**: Optimized for all devices
-- **SEO Optimized**: Built-in sitemap, RSS feed, and meta tags
-- **Fast Performance**: Gatsby's static site generation for optimal speed
-
-## 🛠️ Tech Stack
-
-- **Framework**: [Gatsby](https://www.gatsbyjs.com/) v5
-- **Styling**: [Theme UI](https://theme-ui.com/) with Tailwind preset
-- **Content**: [MDX](https://mdxjs.com/) for rich content authoring
-- **Deployment**: GitHub Pages with custom domain
-- **Plugins**: Custom masonry layout, image optimization, and study mode
-
-## 📦 Installation & Setup
-
-### Prerequisites
-
-- Node.js (v18 or higher)
-- npm or yarn
-
-### Development Setup
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/your-username/learn_english.git
-   cd learn_english
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Start development server**
-
-   ```bash
-   npm run develop
-   # or
-   yarn develop
-   ```
-
-4. **Open your browser**
-
-   Navigate to `http://localhost:8000`
-
-### Build for Production
-
-```bash
-npm run build
-npm run serve
+```
+pnpm create astro@latest -- --template starlight
 ```
 
-## 📝 Content Structure
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-The blog is organized into several content types:
+## 🚀 Project Structure
 
-### Learning Materials
+Inside of your Astro + Starlight project, you'll see the following folders and files:
 
-- **A1 Listening Practice**: Beginner-level listening exercises
-- **Peppa Pig Episodes**: Visual learning with vocabulary analysis
-- **Harry Potter Chapters**: Literature-based learning
-- **Andersen Fairy Tales**: Classic stories for language learning
-
-### Exercises
-
-- **4-Word Exercise**: Creative sentence construction practice
-- **Useful Sentences**: Common phrases and expressions
-- **Building Your English Brain**: Learning strategies and tips
-
-## 🎯 Learning Paths
-
-1. **Beginner (A1)**: Start with A1 listening practice and basic vocabulary
-2. **Visual Learning**: Watch Peppa Pig episodes with vocabulary support
-3. **Reading Practice**: Progress through Harry Potter chapters
-4. **Creative Writing**: Practice with 4-word sentence exercises
-5. **Advanced Materials**: Explore Andersen fairy tales and complex texts
-
-## 🚀 Deployment
-
-The site is automatically deployed to GitHub Pages using the included deployment script:
-
-```bash
-npm run deploy
+```
+.
+├── docs/                 # blog / docs content (Markdown, MDX)
+├── public/
+├── src/
+│   ├── assets/
+│   ├── theme/            # theme components & integration
+│   ├── plugins/
+│   └── content.config.ts
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json
 ```
 
-## 📁 Project Structure
+Content lives in the root `docs/` directory (configurable via `docsDir` / `docsLoader({ base })`). Each `.md` / `.mdx` file is exposed as a route based on its file name.
 
-```text
-learn_english/
-├── docs/                    # Content directory
-│   ├── posts/              # Blog posts and learning materials
-│   └── pages/              # Static pages (About, etc.)
-├── src/                    # Source code
-│   ├── components/         # React components
-│   ├── hooks/             # Custom React hooks
-│   └── templates/         # Gatsby page templates
-├── static/                 # Static assets
-├── plugins/               # Custom Gatsby plugins
-└── public/                # Built site (generated)
-```
+Images can be added to `src/assets/` and embedded in Markdown with a relative link.
 
-## 🤝 Contributing
+Static assets, like favicons, can be placed in the `public/` directory.
 
-This is a personal learning project, but suggestions and improvements are welcome! Feel free to:
+## 🧞 Commands
 
-- Report issues with content or functionality
-- Suggest new learning materials
-- Improve the learning experience
-- Optimize performance
+All commands are run from the root of the project, from a terminal:
 
-## 📄 License
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `pnpm install`             | Installs dependencies                            |
+| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
+| `pnpm build`           | Build your production site to `./dist/`          |
+| `pnpm preview`         | Preview your build locally, before deploying     |
+| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 👀 Want to learn more?
 
-## 🙏 Acknowledgments
-
-- Built with [Gatsby](https://www.gatsbyjs.com/)
-- Based on [@lekoarts/gatsby-theme-minimal-blog](https://github.com/LekoArts/gatsby-themes)
-- Content inspired by various English learning resources
-- Special thanks to the open-source community
-
----
-
-## Happy Learning! 🎓
+Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).

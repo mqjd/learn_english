@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import './markdown.css';
+
+/* Cool gray + teal accent; options can override --sl-theme-accent / --sl-theme-font */
+:root,
+::backdrop {
+	--sl-theme-accent: #0d9488;
+	--sl-theme-font: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+
+	--sl-font: var(--sl-theme-font);
+	--sl-font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+	--sl-color-accent-low: color-mix(in srgb, var(--sl-theme-accent) 28%, #0b1220);
+	--sl-color-accent: var(--sl-theme-accent);
+	--sl-color-accent-high: color-mix(in srgb, var(--sl-theme-accent) 55%, #e8fffb);
+
+	--sl-color-white: hsl(180, 12%, 98%);
+	--sl-color-gray-1: hsl(200, 16%, 92%);
+	--sl-color-gray-2: hsl(200, 10%, 76%);
+	--sl-color-gray-3: hsl(200, 8%, 58%);
+	--sl-color-gray-4: hsl(205, 12%, 34%);
+	--sl-color-gray-5: hsl(210, 18%, 20%);
+	--sl-color-gray-6: hsl(212, 22%, 14%);
+	--sl-color-black: hsl(215, 28%, 8%);
+
+	--sl-color-bg-nav: color-mix(in srgb, var(--sl-color-gray-6) 88%, var(--sl-theme-accent));
+	--sl-color-bg-sidebar: var(--sl-color-gray-6);
+	--sl-content-width: 48rem;
+	--sl-nav-height: 3.75rem;
+}
+
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+	--sl-color-accent-high: color-mix(in srgb, var(--sl-theme-accent) 72%, #06332e);
+	--sl-color-accent: var(--sl-theme-accent);
+	--sl-color-accent-low: color-mix(in srgb, var(--sl-theme-accent) 18%, #ffffff);
+
+	--sl-color-white: hsl(215, 28%, 10%);
+	--sl-color-gray-1: hsl(212, 18%, 22%);
+	--sl-color-gray-2: hsl(205, 12%, 36%);
+	--sl-color-gray-3: hsl(200, 10%, 48%);
+	--sl-color-gray-4: hsl(200, 12%, 72%);
+	--sl-color-gray-5: hsl(200, 16%, 88%);
+	--sl-color-gray-6: hsl(195, 20%, 94%);
+	--sl-color-gray-7: hsl(190, 24%, 97%);
+	--sl-color-black: hsl(180, 20%, 99%);
+
+	--sl-color-bg-nav: var(--sl-color-gray-7);
+	--sl-color-bg-sidebar: var(--sl-color-bg);
+}
+
+/* Tighter main reading column — less stacked padding/margin */
+:root {
+	--sl-content-pad-x: 0.75rem;
+}
+
+@media (min-width: 72rem) {
+	:root {
+		--sl-content-pad-x: 1rem;
+	}
+
+	/* Use reclaimed TOC column width (unlayered so it beats @layer black) */
+	:root[data-has-sidebar][data-has-toc] {
+		--sl-content-width: calc(45rem + var(--sl-sidebar-width));
+		--sl-content-margin-inline: 0;
+	}
+}
+
+.content-panel {
+	padding: 0.75rem var(--sl-content-pad-x);
+}
+
+.content-panel + .content-panel {
+	padding-top: 0.75rem;
+}
+
+.main-pane > .content-panel > .sl-container {
+	margin-inline: var(--sl-content-margin-inline, 0);
+}
+
+.sl-container > * + * {
+	margin-top: 1rem;
+}
+
+/* Layout polish */
+.header {
+	backdrop-filter: blur(10px);
+	background-color: color-mix(in srgb, var(--sl-color-bg-nav) 86%, transparent);
+}
+
+.sl-theme-blog .sidebar-pane {
+	border-inline-end-color: color-mix(in srgb, var(--sl-theme-accent) 22%, var(--sl-color-hairline-shade));
+}
+
+.sl-theme-blog-footer {
+	margin-top: 1rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--sl-color-hairline);
+	text-align: center;
+	font-size: var(--sl-text-xs);
+	color: var(--sl-color-gray-3);
+}
+
+.sl-theme-blog-hero .hero {
+	gap: 1.75rem;
+	padding-block: 1.5rem 2rem;
+}
+
+.sl-theme-blog-hero .hero .stack {
+	gap: 1.25rem;
+}
+
+.sl-theme-blog-hero .hero h1 {
+	letter-spacing: -0.03em;
+}
+
+/* Icon-only search trigger; click opens the modal */
+.sl-theme-blog-header site-search {
+	display: flex;
+	align-items: center;
+}
+
+.sl-theme-blog-header button[data-open-modal] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	box-sizing: border-box;
+	height: 24px;
+	width: 24px;
+	padding: 0;
+	border: 0;
+	border-radius: 0.35rem;
+	background-color: transparent;
+	color: var(--sl-color-gray-2);
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+	transition: color 0.15s ease;
+}
+
+.sl-theme-blog-header button[data-open-modal]:hover,
+.sl-theme-blog-header button[data-open-modal]:focus-visible {
+	color: var(--sl-color-white);
+}
+
+.sl-theme-blog-header button[data-open-modal] svg {
+	width: 24px;
+	height: 24px;
+	flex-shrink: 0;
+}
+
+.sl-theme-blog-header button[data-open-modal] > span,
+.sl-theme-blog-header button[data-open-modal] > kbd {
+	display: none !important;
+}
+

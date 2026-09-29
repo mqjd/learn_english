@@ -1,0 +1,8 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+const { footerText } = Astro.locals.theme;
+---
+
+<Default><slot /></Default>
+{footerText && <p class="sl-theme-blog-footer">{footerText}</p>}

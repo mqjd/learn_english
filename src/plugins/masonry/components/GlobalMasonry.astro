@@ -1,0 +1,107 @@
+---
+import './masonry.css'
+import bootInline from './masonry-boot-inline.js?raw'
+
+interface Props {
+	itemCount?: number | string
+	useStudyMode?: boolean | string
+}
+
+const { itemCount = 0, useStudyMode = false } = Astro.props
+const studyEnabled =
+	useStudyMode === true || useStudyMode === 'true' || String(useStudyMode) === 'true'
+const count = Number(itemCount) || 0
+---
+
+<div
+	class="not-content"
+	data-masonry-root
+	data-item-count={count}
+	data-use-study-mode={studyEnabled ? 'true' : 'false'}
+>
+	{
+		studyEnabled && (
+			<div class="masonry-toolbar" data-masonry-toolbar>
+				<span class="masonry-toolbar-label">Study Mode</span>
+				<label class="masonry-switch-wrap masonry-toolbar-divider">
+					<input
+						type="checkbox"
+						class="masonry-switch-input"
+						data-action="toggle-study"
+						aria-label="Toggle study mode"
+					/>
+					<span class="masonry-switch" aria-hidden="true"></span>
+				</label>
+				<span class="masonry-toolbar-score" data-masonry-score>
+					<span class="masonry-toolbar-score-label" data-score-label hidden>Score</span>
+					<span class="masonry-toolbar-remaining" data-score-remaining>{count}</span>
+					<span class="masonry-toolbar-score-detail" data-score-detail hidden>
+						<span class="masonry-toolbar-success" data-score-success>-0</span>
+						<span class="masonry-toolbar-failed" data-score-failed>-0</span>
+					</span>
+				</span>
+				<label class="masonry-toolbar-check masonry-toolbar-divider" data-advanced-only hidden>
+					Historical Errors Only
+					<input type="checkbox" data-action="toggle-historical" />
+				</label>
+				<label class="masonry-toolbar-check masonry-toolbar-divider" data-advanced-only hidden>
+					Current Errors Only
+					<input type="checkbox" data-action="toggle-current-errors" />
+				</label>
+				<button
+					type="button"
+					class="button button-clear"
+					data-action="clear-storage"
+					data-advanced-only
+					hidden
+					aria-label="Clear historical errors"
+				>
+					<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+						<path
+							d="M899.1 869.6l-53-305.6H864c14.4 0 26-11.6 26-26V346c0-14.4-11.6-26-26-26H618V138c0-14.4-11.6-26-26-26H432c-14.4 0-26 11.6-26 26v182H160c-14.4 0-26 11.6-26 26v192c0 14.4 11.6 26 26 26h17.9l-53 305.6c-0.3 1.5-0.4 3-0.4 4.4 0 14.4 11.6 26 26 26h723c1.5 0 3-0.1 4.4-0.4 14.2-2.4 23.7-15.9 21.2-30zM204 390h272V182h72v208h272v104H204V390z m468 440V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H416V674c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v156H202.8l45.1-260H776l45.1 260H672z"
+						></path>
+					</svg>
+				</button>
+				<button
+					type="button"
+					class="button button-reset"
+					data-action="reset-study"
+					data-advanced-only
+					hidden
+					aria-label="Reset study session"
+				>
+					<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+						<path
+							d="M816.512 368.192l-55.36 32A285.632 285.632 0 0 1 800 544c0 158.816-129.184 288-288 288-106.368 0-199.264-58.144-249.12-144.16A285.856 285.856 0 0 1 224 544c0-158.816 129.216-288 288-288v96l192-128-192-128v96C317.92 192 160 349.888 160 544c0 64.064 17.504 124 47.52 175.808C268.48 824.96 381.984 896 512 896c194.112 0 352-157.92 352-352 0-64.064-17.472-124-47.488-175.808"
+						></path>
+					</svg>
+				</button>
+			</div>
+		)
+	}
+	<div data-masonry-default>
+		<slot />
+	</div>
+	<div class="masonry-container" data-masonry-study-view hidden>
+		<div class="masonry-grid" data-masonry-study-grid></div>
+	</div>
+</div>
+
+{/* Sync boot: measure + reveal before paint (like React useLayoutEffect) */}
+<script is:inline set:html={bootInline} />
+
+<script>
+	import { initMasonryStudy } from './masonry-study.js'
+
+	function boot() {
+		document.querySelectorAll('[data-masonry-root]').forEach((root) => {
+			if (!(root instanceof HTMLElement)) return
+			if (root.dataset.masonryReady === 'true') return
+			root.dataset.masonryReady = 'true'
+			initMasonryStudy(root)
+		})
+	}
+
+	boot()
+	document.addEventListener('astro:page-load', boot)
+</script>

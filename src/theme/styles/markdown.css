@@ -1,0 +1,91 @@
+/**
+ * Markdown typography — font sizes & spacing from learn_english Theme UI styles.
+ * Theme UI space scale: [0, 0.25rem, 0.5rem, 1rem, 2rem, ...]
+ * Breakpoints: 640px / 768px / 1024px
+ */
+
+.sl-markdown-content {
+	--sl-text-h1: 2em;
+	--sl-text-h2: 1.875em;
+	--sl-text-h3: 1.5em;
+	--sl-text-h4: 1.25em;
+	--sl-text-h5: 1em;
+	--sl-text-h6: 1em;
+}
+
+@media (min-width: 640px) {
+	.sl-markdown-content {
+		--sl-text-h1: 2.25em;
+		--sl-text-h2: 2em;
+		--sl-text-h3: 1.875em;
+		--sl-text-h4: 1.5em;
+		--sl-text-h5: 1.25em;
+	}
+}
+
+@media (min-width: 1024px) {
+	.sl-markdown-content {
+		--sl-text-h1: 3em;
+		--sl-text-h2: 2.25em;
+		--sl-text-h3: 2em;
+		--sl-text-h4: 1.875em;
+		--sl-text-h5: 1.5em;
+	}
+}
+
+/* p / li — fontSize: 1em
+ * Note: GlobalMasonry wraps page content in `.not-content`, so do not use
+ * Starlight’s `:not(:where(.not-content *))` exclusion here. */
+.sl-markdown-content p,
+.sl-markdown-content li {
+	font-size: 1em;
+}
+
+.sl-markdown-content p {
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+}
+
+/* headings — match Starlight selectors to override 1.5em */
+.sl-markdown-content
+	:not(h1, h2, h3, h4, h5, h6)
+	+ :is(h1, h2, h3, h4, h5, h6):not(:where(.not-content *)),
+.sl-markdown-content
+	:not(h1, h2, h3, h4, h5, h6, .sl-heading-wrapper)
+	+ :is(.sl-heading-wrapper) {
+	margin-top: 0.8em !important;
+}
+
+/* h6 — mb: 2 → 0.5rem */
+.sl-markdown-content h6:not(:where(.not-content *)),
+.sl-markdown-content .sl-heading-wrapper.level-h6 {
+	margin-bottom: 0.5rem;
+}
+
+/* blockquote — mx: 0, pl: 1em, pt/pb: 0.5em */
+.sl-markdown-content blockquote:not(:where(.not-content *)) {
+	margin-inline: 0;
+	padding-inline-start: 1em;
+	padding-block: 0.5em;
+}
+
+.sl-markdown-content blockquote p:not(:where(.not-content *)) {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+/* table — my: 4 → 2rem; th/td py/pr: 4px, pl: 0 */
+.sl-markdown-content table:not(:where(.not-content *)) {
+	margin-block: 2rem;
+}
+
+.sl-markdown-content :is(th, td):not(:where(.not-content *)) {
+	padding-block: 4px;
+	padding-inline-end: 4px;
+	padding-inline-start: 0;
+}
+
+/* hr — mx: 0 */
+.sl-markdown-content hr:not(:where(.not-content *)) {
+	margin-inline: 0;
+}

@@ -1,0 +1,21 @@
+---
+interface Props {
+	itemCount?: number | string
+	useStudyMode?: boolean | string
+}
+
+const { itemCount = 0, useStudyMode = false } = Astro.props
+const study =
+	useStudyMode === true || useStudyMode === 'true' || String(useStudyMode) === 'true'
+---
+
+<div
+	class="masonry-container not-content"
+	data-masonry-block
+	data-item-count={itemCount}
+	data-use-study-mode={study ? 'true' : 'false'}
+>
+	<div class="masonry-grid">
+		<slot />
+	</div>
+</div>
