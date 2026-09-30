@@ -1,0 +1,106 @@
+.graph-carousel-button {
+	appearance: none;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	position: absolute;
+	top: calc(50% - 45px);
+	width: 60px;
+	height: 90px;
+	display: none;
+	padding: 0;
+	color: var(--sl-color-text);
+	fill: currentColor;
+	z-index: 2;
+}
+
+.graph-carousel {
+	width: 100%;
+	height: 0;
+	padding-top: calc(100% * 9 / 16);
+	position: relative;
+}
+
+.graph-carousel-container {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.graph-carousel:hover .graph-carousel-button {
+	display: inherit;
+}
+
+.graph-carousel-slides {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Hide all slides; Astro scoped GraphSvg styles must not win over this. */
+.graph-carousel-slides > * {
+	position: absolute;
+	inset: 0;
+	display: none !important;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.graph-carousel-slides > *.is-active {
+	display: flex !important;
+}
+
+/* Before JS runs, show only the first slide */
+.graph-carousel:not([data-ready]) .graph-carousel-slides > *:first-child {
+	display: flex !important;
+}
+
+.graph-carousel-slides > * svg {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	display: block;
+}
+
+.graph-carousel-indicators {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.graph-carousel-indicator {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background-color: var(--sl-color-gray-3);
+	border: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	flex-shrink: 0;
+	pointer-events: auto;
+}
+
+.graph-carousel-indicator.is-current {
+	background-color: var(--sl-color-accent);
+}

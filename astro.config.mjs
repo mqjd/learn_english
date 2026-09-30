@@ -1,7 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import { fileURLToPath } from 'node:url';
 import { unified } from '@astrojs/markdown-remark';
 import remarkBaseImages from './src/plugins/base-images/index.js';
+import remarkGraph from './src/plugins/graph/index.js';
 import remarkMasonry from './src/plugins/masonry/index.js';
 import starlightThemeBlog from './src/theme/index.ts';
 
@@ -20,6 +22,17 @@ const markdownIntegration = {
               [
                 remarkMasonry,
                 { importSource: 'virtual:starlight-theme-blog/masonry' },
+              ],
+              [
+                remarkGraph,
+                {
+                  basePath: fileURLToPath(new URL('./graphs/', import.meta.url)),
+                  mxgraphPath: fileURLToPath(
+                    new URL('./libs/mxgraph/', import.meta.url),
+                  ),
+                  krokiUrl: 'https://kroki.io/',
+                  importSource: 'virtual:starlight-theme-blog/graph',
+                },
               ],
             ],
           }),
