@@ -35,6 +35,9 @@ const drawioParser = async (param) => {
 	let drawioContent = await readFileIfExists(localPath)
 	if (drawioContent === null) {
 		if (trimmed.indexOf('http') !== 0) {
+			if (!trimmed.startsWith('<')) {
+				throw new Error(`Drawio file not found: ${localPath}`)
+			}
 			drawioContent = trimmed
 		} else {
 			drawioContent = (remoteBasePath || '') + trimmed

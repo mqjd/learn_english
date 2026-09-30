@@ -1,0 +1,40 @@
+---
+title: "Spark基本知识"
+date: 2024-01-13 15:04:44
+tags:
+  - Bigdata
+  - Spark
+---
+
+## 架构
+
+```graph:lang=drawio;page=2
+drawio/spark_architecture.drawio
+```
+
+## 组件
+
+```graph:lang=drawio;page=0
+drawio/spark_architecture.drawio
+```
+
+## 作业组成
+
+```graph:lang=drawio;page=1
+drawio/spark_architecture.drawio
+```
+
+## 术语
+
+|术语 |含义 |
+|---|---|
+|Application|基于Spark构建的应用程序 |
+|Application jar|应用程序Jar包，包含程序代码跟三方依赖，不包含Spark和Hadoop相关Jar |
+|Driver Program |Driver程序。创建SparkContext及main函数的程序 |
+|Cluster Manager |集群管理。Spark通常会运行在Standalone、Yarn、K8S、Mesos等环境中 |
+|Deploy mode|部署模式。Cluster模式Driver节点在集群中运行，Client模式Driver节点在集群外运行 |
+|Worker node|执行业务代码的节点。Yarn模式就是NodeManager |
+|Executor|执行器。在Worker node上启动的进程，用来执行作业Task |
+|Task|Spark作业的执行单元，在Executor执行 |
+|Job|由Spark中Action算子（save、collect等）触发，一个Spark应用中可以包含一个或者多个Job |
+|Stage|一个Job由一个或者多个Stage组成，一个Stage包含一个或多个Task |
