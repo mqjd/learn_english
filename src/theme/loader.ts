@@ -3,6 +3,9 @@ import { glob, type Loader, type LoaderContext } from 'astro/loaders';
 /** Default docs directory relative to the project root. */
 export const DEFAULT_DOCS_DIR = 'docs';
 
+/** Default blog posts directory relative to the project root. */
+export const DEFAULT_POSTS_DIR = 'posts';
+
 // Match Starlight's docsLoader extensions:
 // https://github.com/withastro/starlight/blob/main/packages/starlight/src/loaders.ts
 const docsExtensions = ['markdown', 'mdown', 'mkdn', 'mkd', 'mdwn', 'md', 'mdx'];
@@ -25,6 +28,25 @@ export interface DocsLoaderOptions {
 	generateId?: GenerateIdFunction;
 }
 
+/** Strip leading/trailing slashes from a frontmatter slug. */
+export function normalizePostSlug(slug: string): string {
+	return slug.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
+}
+
+/**
+ * Posts entry id: frontmatter `slug` (normalized) or path relative to `postsDir`.
+ * Schema must not declare `slug`; the glob loader reads it from raw frontmatter.
+ */
+export const postsGenerateId: GenerateIdFunction = ({ entry, data }) => {
+	if (data.slug != null && String(data.slug).trim()) {
+		return normalizePostSlug(String(data.slug));
+	}
+	return entry
+		.replace(/\\/g, '/')
+		.replace(/\.[^.]+$/, '')
+		.replace(/\/index$/, '');
+};
+
 /**
  * Loads content from a configurable root-level docs directory (default: `docs/`),
  * ignoring filenames starting with `_`.
@@ -37,6 +59,20 @@ export function docsLoader({
 }: DocsLoaderOptions = {}): Loader {
 	return {
 		name: 'starlight-theme-blog-docs-loader',
+		load: createDocsLoadFn(base, generateId),
+	};
+}
+
+/**
+ * Loads blog posts from a configurable root-level directory (default: `posts/`).
+ * Keep `base` in sync with `postsDir` passed to `starlightThemeBlog()`.
+ */
+export function postsLoader({
+	base = DEFAULT_POSTS_DIR,
+	generateId = postsGenerateId,
+}: DocsLoaderOptions = {}): Loader {
+	return {
+		name: 'starlight-theme-blog-posts-loader',
 		load: createDocsLoadFn(base, generateId),
 	};
 }

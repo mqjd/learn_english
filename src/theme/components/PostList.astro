@@ -1,0 +1,137 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import themeConfig from 'virtual:starlight-theme-blog/config';
+import { getPostExcerpt, postHref } from '../posts';
+
+interface Props {
+	posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const postsDir = themeConfig.postsDir;
+---
+
+{
+	posts.length === 0 ? (
+		<p class="post-list-empty">No posts yet.</p>
+	) : (
+		<ul class="post-list">
+			{posts.map((post) => {
+				const href = postHref(post.id, base, postsDir);
+				const excerpt = getPostExcerpt(post);
+				const date = post.data.date;
+				const image = post.data.image;
+				return (
+					<li>
+						<a class="post-card" href={href}>
+							<div class="post-card__body">
+								<h2 class="post-card__title">{post.data.title}</h2>
+								{excerpt && <p class="post-card__excerpt">{excerpt}</p>}
+							</div>
+							{image && (
+								<div class="post-card__media">
+									<Image src={image} alt="" widths={[160, 240]} sizes="120px" />
+								</div>
+							)}
+						</a>
+						{date && (
+							<time class="post-card__date" datetime={date.toISOString()}>
+								{date.toISOString().slice(0, 10)}
+							</time>
+						)}
+					</li>
+				);
+			})}
+		</ul>
+	)
+}
+
+<style>
+	.post-list {
+		margin: 1.5rem 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.post-list > li {
+		padding-block: 1rem;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+
+	.post-card {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.25rem;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.post-card:hover .post-card__title {
+		color: var(--sl-color-text-accent);
+	}
+
+	.post-card__body {
+		min-width: 0;
+		flex: 1 1 auto;
+	}
+
+	.post-card__title {
+		margin: 0;
+		font-size: var(--sl-text-xl);
+		font-weight: 600;
+		line-height: var(--sl-line-height-headings);
+		color: var(--sl-color-white);
+	}
+
+	.post-card__excerpt {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+		margin: 0.5rem 0 0;
+		color: var(--sl-color-gray-2);
+		font-size: var(--sl-text-sm);
+		line-height: 1.55;
+	}
+
+	.post-card__media {
+		flex: 0 0 auto;
+		width: 7.5rem;
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		border-radius: 0.35rem;
+		background: var(--sl-color-gray-6);
+	}
+
+	.post-card__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.post-card__date {
+		display: block;
+		margin-top: 0.65rem;
+		color: var(--sl-color-gray-3);
+		font-size: var(--sl-text-sm);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.post-list-empty {
+		color: var(--sl-color-gray-2);
+	}
+
+	@media (max-width: 35rem) {
+		.post-card {
+			flex-direction: column-reverse;
+		}
+
+		.post-card__media {
+			width: 100%;
+			max-width: 12rem;
+		}
+	}
+</style>

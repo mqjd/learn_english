@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import themeConfig from 'virtual:starlight-theme-blog/config';
+import { getRecentPosts, postsIndexHref } from '../posts';
+import PostList from './PostList.astro';
+
+const base = import.meta.env.BASE_URL;
+const posts = getRecentPosts(await getCollection('posts'), 3);
+const allHref = postsIndexHref(base, themeConfig.postsDir);
+---
+
+{
+	posts.length > 0 && (
+		<section class="recent-posts">
+			<div class="recent-posts__header">
+				<h2 class="recent-posts__title">Latest Posts</h2>
+				<a class="recent-posts__all" href={allHref}>
+					View all
+				</a>
+			</div>
+			<PostList posts={posts} />
+		</section>
+	)
+}
+
+<style>
+	.recent-posts {
+		margin-block: 2.5rem 1rem;
+	}
+
+	.recent-posts__header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.recent-posts__title {
+		margin: 0;
+		font-size: var(--sl-text-2xl);
+	}
+
+	.recent-posts__all {
+		flex: 0 0 auto;
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+		font-size: var(--sl-text-sm);
+	}
+
+	.recent-posts__all:hover {
+		text-decoration: underline;
+	}
+</style>

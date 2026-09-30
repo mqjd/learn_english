@@ -1,4 +1,4 @@
-import { DEFAULT_DOCS_DIR } from './loader';
+import { DEFAULT_DOCS_DIR, DEFAULT_POSTS_DIR } from './loader';
 
 /** Top-nav item mapped to a docs subdirectory or an explicit internal route. */
 export type NavItem =
@@ -27,11 +27,18 @@ export interface ThemeUserConfig {
 	/** Hide the page table of contents site-wide. */
 	hideTableOfContents?: boolean;
 	/**
-	 * Project-root directory for Markdown/MDX content.
+	 * Project-root directory for Markdown/MDX docs.
 	 * Must match `docsLoader({ base })` in `src/content.config.ts`.
 	 * @default 'docs'
 	 */
 	docsDir?: string;
+	/**
+	 * Project-root directory for blog posts.
+	 * Must match `postsLoader({ base })` in `src/content.config.ts`.
+	 * Also used as the public URL prefix (`/{postsDir}/{slug}/`).
+	 * @default 'posts'
+	 */
+	postsDir?: string;
 	/**
 	 * Docusaurus-style top nav sections. When non-empty, each entry becomes a
 	 * header link. All `docsDir` subdirectories remain accessible via the
@@ -47,6 +54,7 @@ export interface ThemeConfig {
 	footerText: string;
 	hideTableOfContents: boolean;
 	docsDir: string;
+	postsDir: string;
 	navs: NavItem[];
 }
 
@@ -63,6 +71,7 @@ export const THEME_OPTION_KEYS = [
 	'footerText',
 	'hideTableOfContents',
 	'docsDir',
+	'postsDir',
 	'navs',
 ] as const satisfies readonly (keyof ThemeUserConfig)[];
 
@@ -72,6 +81,7 @@ const defaults: ThemeConfig = {
 	footerText: '',
 	hideTableOfContents: false,
 	docsDir: DEFAULT_DOCS_DIR,
+	postsDir: DEFAULT_POSTS_DIR,
 	navs: [],
 };
 
@@ -82,6 +92,7 @@ export function resolveOptions(userConfig: ThemeUserConfig = {}): ThemeConfig {
 		footerText: userConfig.footerText ?? defaults.footerText,
 		hideTableOfContents: userConfig.hideTableOfContents ?? defaults.hideTableOfContents,
 		docsDir: userConfig.docsDir ?? defaults.docsDir,
+		postsDir: userConfig.postsDir ?? defaults.postsDir,
 		navs: userConfig.navs ?? defaults.navs,
 	};
 }

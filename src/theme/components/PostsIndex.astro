@@ -1,0 +1,12 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../posts';
+import PostList from './PostList.astro';
+
+const posts = getPublishedPosts(await getCollection('posts'));
+---
+
+<StarlightPage frontmatter={{ title: 'Posts', template: 'splash', editUrl: false, prev: false, next: false }}>
+	<PostList posts={posts} />
+</StarlightPage>

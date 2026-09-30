@@ -1,5 +1,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { docIdToHref } from './directory-index';
+import { DEFAULT_POSTS_DIR } from './loader';
+import { postHref } from './posts';
 
 export type TagDocument = {
 	id: string;
@@ -16,6 +18,12 @@ export type TagArchive = {
 };
 
 type DocsEntry = CollectionEntry<'docs'>;
+type PostsEntry = CollectionEntry<'posts'>;
+
+type TaggedEntry = {
+	id: string;
+	data: { title: string; date?: Date; tags?: string[]; draft?: boolean };
+};
 
 /** Keep tag URLs consistent with the blog's kebab-case tag paths. */
 export function tagSlug(name: string): string {
@@ -42,27 +50,43 @@ function compareDocuments(a: TagDocument, b: TagDocument): number {
 	return compareTagNames(a.title, b.title) || a.id.localeCompare(b.id);
 }
 
-export function getTagArchives(docs: DocsEntry[], base: string): TagArchive[] {
+function addTaggedEntry(
+	archives: Map<string, { name: string; documents: TagDocument[] }>,
+	entry: TaggedEntry,
+	href: string,
+) {
+	if (entry.data.draft) return;
+
+	const names = new Set((entry.data.tags ?? []).map((tag) => tag.trim()).filter(Boolean));
+	for (const name of names) {
+		const slug = tagSlug(name);
+		if (!slug) continue;
+
+		const archive = archives.get(slug) ?? { name, documents: [] };
+		if (compareTagNames(name, archive.name) < 0) archive.name = name;
+		archive.documents.push({
+			id: entry.id,
+			title: entry.data.title,
+			date: entry.data.date,
+			href,
+		});
+		archives.set(slug, archive);
+	}
+}
+
+export function getTagArchives(
+	docs: DocsEntry[],
+	base: string,
+	posts: PostsEntry[] = [],
+	postsDir = DEFAULT_POSTS_DIR,
+): TagArchive[] {
 	const archives = new Map<string, { name: string; documents: TagDocument[] }>();
 
 	for (const entry of docs) {
-		if (entry.data.draft) continue;
-
-		const names = new Set((entry.data.tags ?? []).map((tag) => tag.trim()).filter(Boolean));
-		for (const name of names) {
-			const slug = tagSlug(name);
-			if (!slug) continue;
-
-			const archive = archives.get(slug) ?? { name, documents: [] };
-			if (compareTagNames(name, archive.name) < 0) archive.name = name;
-			archive.documents.push({
-				id: entry.id,
-				title: entry.data.title,
-				date: entry.data.date,
-				href: docIdToHref(entry.id, base),
-			});
-			archives.set(slug, archive);
-		}
+		addTaggedEntry(archives, entry, docIdToHref(entry.id, base));
+	}
+	for (const entry of posts) {
+		addTaggedEntry(archives, entry, postHref(entry.id, base, postsDir));
 	}
 
 	return [...archives.entries()]

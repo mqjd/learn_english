@@ -1,0 +1,36 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('posts');
+	return posts
+		.filter((post) => !post.data.draft)
+		.map((post) => ({
+			params: { slug: post.id },
+			props: { post },
+		}));
+}
+
+interface Props {
+	post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+
+const frontmatter = {
+	title: post.data.title,
+	description: post.data.description,
+	template: 'splash' as const,
+	editUrl: false as const,
+	prev: false as const,
+	next: false as const,
+	date: post.data.date,
+	tags: post.data.tags,
+};
+---
+
+<StarlightPage frontmatter={frontmatter as any} headings={headings}>
+	<Content />
+</StarlightPage>

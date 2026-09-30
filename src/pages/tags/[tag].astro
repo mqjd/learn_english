@@ -1,13 +1,15 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import { getCollection } from 'astro:content';
+import themeConfig from 'virtual:starlight-theme-blog/config';
 import { getTagArchives } from '../../theme/tags';
 import { withBasePath } from '../../theme/paths';
 
 const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
-	const tags = getTagArchives(await getCollection('docs'), import.meta.env.BASE_URL);
+	const [docs, posts] = await Promise.all([getCollection('docs'), getCollection('posts')]);
+	const tags = getTagArchives(docs, import.meta.env.BASE_URL, posts, themeConfig.postsDir);
 	return tags.map((tag) => ({ params: { tag: tag.slug }, props: { tag } }));
 }
 

@@ -52,6 +52,8 @@ export default defineConfig({
       title: 'MQJD',
       favicon: '/favicon.ico',
       pagefind: true,
+      docsDir: 'docs',
+      postsDir: 'posts',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/mqjd' },
       ],
@@ -60,6 +62,7 @@ export default defineConfig({
         { label: 'Listening', dirName: 'listening' },
         { label: 'Exercise', dirName: 'exercise' },
         { label: 'Media', dirName: 'medias' },
+        { label: 'Posts', href: '/posts/' },
         { label: 'Tags', href: '/tags/' },
       ],
       accentColor: '#3f51b5',

@@ -11,7 +11,16 @@ import {
 import { adaptSidebarForDocsDir } from './sidebar';
 
 export type { ThemeUserConfig, ThemeConfig, NavItem, ThemeNavLink } from './options';
-export { docsLoader, docsCategoryLoader, i18nLoader, DEFAULT_DOCS_DIR } from './loader';
+export {
+	docsLoader,
+	docsCategoryLoader,
+	postsLoader,
+	i18nLoader,
+	DEFAULT_DOCS_DIR,
+	DEFAULT_POSTS_DIR,
+	normalizePostSlug,
+	postsGenerateId,
+} from './loader';
 export { docsSchema, docsCategorySchema, i18nSchema } from './schema';
 
 /** Starlight config plus theme-only options. Replaces `starlight()` in `integrations`. */
@@ -73,6 +82,25 @@ function themeIntegration(options: ThemeConfig): AstroIntegration {
 						`Directory index pages: ${dirs.map((dir) => `/${dir}/`).join(', ')}`,
 					);
 				}
+
+				const postsDir = options.postsDir.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
+				const postsIndex = fileURLToPath(
+					new URL('./components/PostsIndex.astro', import.meta.url),
+				);
+				const postPage = fileURLToPath(
+					new URL('./components/PostPage.astro', import.meta.url),
+				);
+				injectRoute({
+					pattern: postsDir,
+					entrypoint: postsIndex,
+					prerender: true,
+				});
+				injectRoute({
+					pattern: `${postsDir}/[...slug]`,
+					entrypoint: postPage,
+					prerender: true,
+				});
+				logger.info(`Blog post pages: /${postsDir}/, /${postsDir}/[...slug]/`);
 			},
 		},
 	};
@@ -87,6 +115,7 @@ function themePlugin(options: ThemeConfig): StarlightPlugin {
 				const themeCss = fileURLToPath(new URL('./styles/theme.css', import.meta.url));
 				const componentsDir = fileURLToPath(new URL('./components', import.meta.url));
 				const docsDir = options.docsDir.replace(/\\/g, '/').replace(/\/+$/, '');
+				const postsDir = options.postsDir.replace(/\\/g, '/').replace(/^\/+|\/+$/g, '');
 
 				addIntegration(themeIntegration(options));
 
@@ -117,6 +146,7 @@ function themePlugin(options: ThemeConfig): StarlightPlugin {
 						...config.markdown,
 						processedDirs: [
 							`./${docsDir}`,
+							`./${postsDir}`,
 							...(config.markdown?.processedDirs ?? []),
 						],
 					},
@@ -130,7 +160,7 @@ function themePlugin(options: ThemeConfig): StarlightPlugin {
 				});
 
 				logger.info(
-					`Theme applied (docs: ${docsDir}/, navs: ${options.navs.length})`,
+					`Theme applied (docs: ${docsDir}/, posts: ${postsDir}/, navs: ${options.navs.length})`,
 				);
 			},
 		},
@@ -140,9 +170,9 @@ function themePlugin(options: ThemeConfig): StarlightPlugin {
 /**
  * Starlight theme integration — use this instead of `starlight()` in `astro.config`.
  *
- * Content lives in a root-level docs directory (default `docs/`), separate from
- * theme components under `src/`. Pass the same path to `docsLoader({ base })`
- * in `src/content.config.ts`.
+ * Content lives in root-level `docsDir` / `postsDir` (defaults `docs/`, `posts/`),
+ * separate from theme components under `src/`. Pass matching paths to
+ * `docsLoader({ base })` / `postsLoader({ base })` in `src/content.config.ts`.
  *
  * Sidebar sections come from the docs content collection; `navs` only controls
  * which sections appear in the header.
@@ -155,11 +185,11 @@ function themePlugin(options: ThemeConfig): StarlightPlugin {
  *     starlightThemeBlog({
  *       title: 'My Docs',
  *       docsDir: 'docs',
+ *       postsDir: 'posts',
  *       accentColor: '#0d9488',
- *       // Only these appear in the header; all docs/ subdirs remain accessible.
  *       navs: [
  *         { label: 'Guides', dirName: 'guides' },
- *         { label: 'Reference', dirName: 'reference' },
+ *         { label: 'Posts', href: '/posts/' },
  *       ],
  *     }),
  *   ],
