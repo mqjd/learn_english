@@ -1,0 +1,10 @@
+---
+const { zoom = 1, ratio } = Astro.props
+const style = ratio
+	? `aspect-ratio: ${ratio}; --deck-zoom: ${zoom}`
+	: `--deck-zoom: ${zoom}`
+---
+
+<div class="deck-zoom" style={style}>
+	<slot />
+</div>

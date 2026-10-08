@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "deploy": "bash deploy.sh",
-    "astro": "astro"
+    "astro": "astro",
+    "test:deck": "node --test src/plugins/deck/index.test.js src/plugins/deck/client.test.js"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.1",

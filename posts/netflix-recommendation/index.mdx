@@ -1,0 +1,167 @@
+---
+title: Netflix Recommendation
+date: 2022-01-15 20:14:44
+deck: true
+tags:
+  - Deck
+  - Bigdata
+  - Recommendation
+---
+import './index.css'
+import deckTheme from './theme.js'
+
+export const theme = deckTheme
+
+<div class="home-page">
+  # Netflix与推荐系统
+  <img style={{width: '63%', position: 'absolute', right: '-14%', top: '0px'}} src="https://mqjd-assets.pages.dev/imgs/icon/netflix-icon.svg" />
+  <img style={{height: '8%', position: 'absolute', left: '10%', bottom: '15%'}} src="https://mqjd-assets.pages.dev/imgs/icon/netflix-official.svg" />
+</div>
+
+---
+
+# Netflix主页
+
+---
+
+<Split>
+  <img style={{width: '85%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_home_1.png" />
+  <img src="https://mqjd-assets.pages.dev/imgs/img/netflix_home_2.jpg" />
+  <img src="https://mqjd-assets.pages.dev/imgs/img/netflix_home_3.jpg" />
+</Split>
+
+---
+
+### 观看内容
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_1.png" />
+
+### TOPN
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_2.png" />
+
+### 趋势
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_3.png" />
+
+### 继续观看
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_4.png" />
+
+---
+
+### 内容相似
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_5.png" />
+
+### 兴趣相同
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_6.png" />
+
+### 朋友推荐
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_7.png" />
+
+### 列表推荐
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_8.png" />
+
+---
+
+<img style={{width: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_home_trend.png" />
+
+---
+
+# 算法
+
+---
+
+### Personalised Video Ranking (PVR)
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_1.png" />
+
+### Top-N Video Ranker
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_2.png" />
+
+### Trending Now Ranker
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_3.png" />
+
+### Continue Watching Ranker
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_4.png" />
+
+---
+
+### Video-Video Similarity Ranker (Because you watched)
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_row_1.png" />
+
+---
+
+### Page Generation: Row Selection and Ranking
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_home_generate.jpg" />
+
+---
+
+### Session or sequence-based
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/contexttual_sequence_data.jpg" />
+
+---
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/personalized_page_generation.png" />
+
+---
+
+<img style={{width: '60%'}} src="https://mqjd-assets.pages.dev/imgs/img/row_select.png" />
+
+---
+
+<img style={{width: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/ab_test_service.png" />
+
+---
+
+# 推荐数据源
+
+---
+
+<img style={{maxWidth: '80%', maxHeight: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_1.jpg" />
+
+---
+
+<img style={{maxWidth: '80%', maxHeight: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_2.jpg" />
+
+---
+
+<img style={{maxWidth: '80%', maxHeight: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_4.png" />
+
+---
+
+<img style={{maxWidth: '80%', maxHeight: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_3.png" />
+
+---
+
+<img style={{maxWidth: '80%', maxHeight: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_home_2.jpg" />
+
+---
+
+```graph:lang=drawio;page=1;
+drawio/netflix_recommendation_black.drawio
+```
+
+---
+
+# 系统架构
+
+---
+
+<img style={{width: '80%'}} src="https://mqjd-assets.pages.dev/imgs/img/netflix_data_landscape.png" />
+
+---
+
+```graph:page=0;lang=drawio
+drawio/netflix_recommendation_black.drawio
+```

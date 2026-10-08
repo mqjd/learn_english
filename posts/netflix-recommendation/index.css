@@ -1,0 +1,11 @@
+.home-page {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.home-page > .sl-heading-wrapper {
+	position: absolute;
+	left: 10%;
+	top: 10%;
+}

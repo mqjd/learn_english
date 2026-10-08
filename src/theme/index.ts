@@ -30,6 +30,7 @@ const VIRTUAL_MODULE_ID = 'virtual:starlight-theme-blog/config';
 const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`;
 const MASONRY_MODULE_ID = 'virtual:starlight-theme-blog/masonry';
 const GRAPH_MODULE_ID = 'virtual:starlight-theme-blog/graph';
+const DECK_MODULE_ID = 'virtual:starlight-theme-blog/deck';
 
 function vitePlugin(options: ThemeConfig) {
 	const masonryComponents = fileURLToPath(
@@ -38,6 +39,9 @@ function vitePlugin(options: ThemeConfig) {
 	const graphComponents = fileURLToPath(
 		new URL('../plugins/graph/components/index.ts', import.meta.url),
 	);
+	const deckComponents = fileURLToPath(
+		new URL('../plugins/deck/components/index.ts', import.meta.url),
+	);
 
 	return {
 		name: 'vite-plugin-starlight-theme-blog-config',
@@ -45,6 +49,7 @@ function vitePlugin(options: ThemeConfig) {
 			if (id === VIRTUAL_MODULE_ID) return RESOLVED_VIRTUAL_MODULE_ID;
 			if (id === MASONRY_MODULE_ID) return masonryComponents;
 			if (id === GRAPH_MODULE_ID) return graphComponents;
+			if (id === DECK_MODULE_ID) return deckComponents;
 		},
 		load(id: string) {
 			if (id === RESOLVED_VIRTUAL_MODULE_ID) {

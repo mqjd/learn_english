@@ -87,6 +87,11 @@ import './carousel.css'
 			indicators?.children[current]?.classList.add('is-current')
 		}
 
+		root.addEventListener('deck:step', (event) => {
+			const step = (event as CustomEvent<{ step: number }>).detail.step
+			setCurrent(Math.max(0, Math.min(step, total - 1)))
+		})
+
 		root.querySelector('[data-graph-carousel-prev]')?.addEventListener('click', () => {
 			setCurrent(current - 1)
 		})

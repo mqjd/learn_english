@@ -1,0 +1,61 @@
+---
+import '../deck.css'
+
+const { title = 'Presentation', theme = {} } = Astro.props
+const colors = theme?.colors ?? {}
+const variables = [
+	['--deck-background', colors.slideBackground],
+	['--deck-foreground', colors.text ?? (colors.slideBackground ? '#f2f0e9' : undefined)],
+	['--deck-heading', colors.heading],
+]
+	.filter(([, value]) => typeof value === 'string')
+	.map(([name, value]) => `${name}: ${value}`)
+	.join('; ')
+---
+
+<main class="deck-root" data-deck style={variables} aria-label={title}>
+	<button class="deck-fullscreen" type="button" data-deck-action="fullscreen" aria-label="Toggle fullscreen" title="Full screen">
+		<svg class="deck-fullscreen-enter" viewBox="0 0 1024 1024" aria-hidden="true">
+			<path d="M877.248 786.752 730.496 640 640 730.496 786.752 877.248 640 1024 1024 1024 1024 640Z"></path>
+			<path d="M384 0 0 0 0 384 146.752 237.248 292 382.496 382.496 292 237.248 146.752Z"></path>
+			<path d="M384 730.496 293.504 640 146.752 786.752 0 640 0 1024 384 1024 237.248 877.248Z"></path>
+			<path d="M1024 0 640 0 786.752 146.752 641.344 292 731.84 382.496 877.248 237.248 1024 384Z"></path>
+		</svg>
+		<svg class="deck-fullscreen-exit" viewBox="0 0 1024 1024" aria-hidden="true">
+			<path d="M786.752 877.248 933.504 1024 1024 933.504 877.248 786.752 1024 640 640 640 640 1024Z"></path>
+			<path d="M0 384 384 384 384 0 237.248 146.752 92 1.376 1.504 91.872 146.752 237.248Z"></path>
+			<path d="M0 933.504 90.496 1024 237.248 877.248 384 1024 384 640 0 640 146.752 786.752Z"></path>
+			<path d="M640 384 1024 384 877.248 237.248 1022.752 91.872 932.256 1.376 786.752 146.752 640 0Z"></path>
+		</svg>
+	</button>
+	<output class="deck-sr-only" data-deck-counter aria-live="polite">1 / 1</output>
+	<div class="deck-viewport" data-deck-viewport>
+		<slot />
+	</div>
+	<section class="deck-presenter" data-deck-presenter aria-label="Presenter view" hidden>
+		<div class="deck-presenter-main" data-presenter-current></div>
+		<aside class="deck-presenter-side">
+			<h2>Next</h2>
+			<div class="deck-presenter-next" data-presenter-next></div>
+			<h2>Notes</h2>
+			<div class="deck-presenter-notes" data-presenter-notes></div>
+		</aside>
+		<footer class="deck-presenter-footer">
+			<span data-presenter-counter></span>
+			<time data-deck-clock></time>
+			<div class="deck-timer-controls">
+				<button type="button" data-deck-action="timer-toggle">Start timer</button>
+				<button type="button" data-deck-action="timer-reset">Reset</button>
+				<time data-deck-timer>00:00</time>
+			</div>
+		</footer>
+	</section>
+	<span class="deck-sr-only" data-deck-status aria-live="polite"></span>
+</main>
+
+<script>
+	import { mountDecks } from '../client.js'
+
+	mountDecks()
+	document.addEventListener('astro:page-load', mountDecks)
+</script>

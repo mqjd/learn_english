@@ -5,6 +5,7 @@ import { unified } from '@astrojs/markdown-remark';
 import remarkBaseImages from './src/plugins/base-images/index.js';
 import remarkGraph from './src/plugins/graph/index.js';
 import remarkMasonry from './src/plugins/masonry/index.js';
+import remarkDeck from './src/plugins/deck/index.js';
 import starlightThemeBlog from './src/theme/index.ts';
 
 /** @type {import('astro').AstroIntegration} */
@@ -19,6 +20,10 @@ const markdownIntegration = {
             gfm: true,
             remarkPlugins: [
               [remarkBaseImages, { base: config.base }],
+              [
+                remarkDeck,
+                { importSource: 'virtual:starlight-theme-blog/deck' },
+              ],
               [
                 remarkMasonry,
                 { importSource: 'virtual:starlight-theme-blog/masonry' },
