@@ -162,12 +162,12 @@ const cloneContent = (root, slide, target) => {
 		root.clientWidth
 	const sourceHeight = sourceWidth / SLIDE_RATIO
 	const targetRect = target.getBoundingClientRect()
-	const scale = Math.min(targetRect.width / sourceWidth, targetRect.height / sourceHeight)
+	const scale = Math.min(targetRect.width / sourceWidth, targetRect.height / sourceHeight) || 1
 	const canvas = document.createElement('div')
 	canvas.className = 'deck-presenter-canvas'
 	clone.style.position = 'absolute'
-	clone.style.top = '0'
-	clone.style.left = '0'
+	clone.style.left = `${(targetRect.width - sourceWidth * scale) / 2}px`
+	clone.style.top = `${(targetRect.height - sourceHeight * scale) / 2}px`
 	clone.style.width = `${sourceWidth}px`
 	clone.style.height = `${sourceHeight}px`
 	clone.style.maxWidth = 'none'
@@ -264,7 +264,10 @@ const setMaximized = (root, maximized) => {
 	}
 	document.documentElement.classList.toggle('deck-maximized', root.dataset.maximized === 'true')
 	updatePageOverflow()
-	fitDeckContent(root, querySlides(root), Number(root.dataset.index) || 0)
+	const slides = querySlides(root)
+	const index = Number(root.dataset.index) || 0
+	fitDeckContent(root, slides, index)
+	updatePresenter(root, slides, index)
 	writeLocation(root, { mode: root.dataset.mode === 'normal' ? undefined : root.dataset.mode })
 }
 
@@ -373,8 +376,8 @@ const mountRoot = (root) => {
 			carousel.dispatchEvent(new CustomEvent('deck:step', { bubbles: false, detail: { step } }))
 		})
 	})
-	applyDeckState(root)
 	if (query.has('maximize')) setMaximized(root, true)
+	applyDeckState(root)
 }
 
 const onKeyDown = (event) => {
